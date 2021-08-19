@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hashPath = exports.getStoriesFile = exports.getStoriesDir = exports.getStories = exports.getStoryManifest = exports.getManifestFilePath = exports.defaultConfig = exports.storiesDirName = void 0;
+exports.generateId = exports.getStoriesFile = exports.getStoriesDir = exports.getStories = exports.getStoryManifest = exports.getManifestFilePath = exports.defaultConfig = exports.storiesDirName = void 0;
 var path_1 = __importDefault(require("path"));
 exports.storiesDirName = '__generated__/stories';
 exports.defaultConfig = {
@@ -40,17 +40,10 @@ function getStoriesFile(config) {
     return storyFile;
 }
 exports.getStoriesFile = getStoriesFile;
-function hashPath(filePath) {
-    var id = filePath
-        .split('/')
-        .map(function (substr) { return substr.replace(/[-.]/g, ''); })
-        .join('');
-    // if it starts with a digit, replace that digit with its char equivalent
-    if (id.match(/^\d/)) {
-        var charForDigit = String.fromCharCode(97 + Number(id.charAt(0)));
-        id = charForDigit + id.substring(1);
-    }
+function generateId(filePath) {
+    // replaces all non-alphabet characters in the filePath
+    var id = filePath.replace(/[^a-zA-Z]+/gi, '');
     return id;
 }
-exports.hashPath = hashPath;
+exports.generateId = generateId;
 //# sourceMappingURL=shared.js.map

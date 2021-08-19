@@ -53,7 +53,7 @@ function removeStoryAsync(relPath, config) {
                     watchRoot = config.watchRoot, projectRoot = config.projectRoot;
                     storyManifest = shared_1.getStoryManifest(projectRoot);
                     fullPath = path_1.default.resolve(watchRoot, relPath);
-                    id = shared_1.hashPath(fullPath);
+                    id = shared_1.generateId(fullPath);
                     delete storyManifest.files[id];
                     // 3. save updated manifest file to disk
                     return [4 /*yield*/, saveManifestAsync_1.saveManifestAsync(storyManifest, config)];

@@ -6,4 +6,4 @@ export declare function getStoryManifest(projectRoot: string): StoryManifest;
 export declare function getStories(config: StoryOptions): import("../types").StoryFile[];
 export declare function getStoriesDir(config: StoryOptions): string;
 export declare function getStoriesFile(config: StoryOptions): string;
-export declare function hashPath(filePath: string): string;
+export declare function generateId(filePath: string): string;

@@ -1,2 +1,1 @@
-import { StoryOptions } from '../../types';
-export declare function buildAsync(config: StoryOptions): Promise<void>;
+export declare function buildAsync(config: any): Promise<void>;
