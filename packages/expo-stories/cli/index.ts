@@ -31,7 +31,7 @@ initCommand
     await initAsync(config);
     await buildAsync(config);
 
-    if (options.w) {
+    if (options.watch) {
       await watchAsync(config);
     }
   });
