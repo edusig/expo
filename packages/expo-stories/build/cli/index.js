@@ -77,7 +77,7 @@ initCommand
                 return [4 /*yield*/, build_1.buildAsync(config)];
             case 2:
                 _a.sent();
-                if (!options.w) return [3 /*break*/, 4];
+                if (!options.watch) return [3 /*break*/, 4];
                 return [4 /*yield*/, watch_1.watchAsync(config)];
             case 3:
                 _a.sent();
