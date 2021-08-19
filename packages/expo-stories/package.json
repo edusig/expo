@@ -27,6 +27,7 @@
     "acorn-loose": "^8.1.0",
     "commander": "^8.0.0",
     "esbuild": "^0.12.15",
+    "fs-extra": "^9.1.0",
     "glob": "^7.1.7",
     "sane": "^5.0.1"
   }
