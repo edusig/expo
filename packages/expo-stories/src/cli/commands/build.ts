@@ -1,9 +1,8 @@
 import glob from 'glob';
 
-import { StoryOptions } from '../../types';
 import { addStoriesAsync } from '../addStoriesAsync';
 
-export async function buildAsync(config: StoryOptions) {
+export async function buildAsync(config: any) {
   const { watchRoot } = config;
 
   const relPaths = glob.sync('**/*.stories.{tsx,ts,js,jsx}', {

@@ -1,9 +1,9 @@
 import fse from 'fs-extra';
 import path from 'path';
 
-import { StoryOptions, StoryFile, StoryManifest } from '../types';
+import { StoryOptions, StoryFile, StoryManifest } from '../../types';
 import { saveManifestAsync } from './saveManifestAsync';
-import { getStoryManifest, hashPath } from './shared';
+import { getStoryManifest, generateId } from './shared';
 import { writeStoriesAsync } from './writeStoriesAsync';
 
 export async function addStoriesAsync(relPaths: string[], config: StoryOptions) {
@@ -16,7 +16,7 @@ export async function addStoriesAsync(relPaths: string[], config: StoryOptions) 
   await Promise.all(
     relPaths.map(async relativePath => {
       const fullPath = path.resolve(watchRoot, relativePath);
-      const id = hashPath(fullPath);
+      const id = generateId(fullPath);
 
       const defaultTitle = relativePath
         .split('/')

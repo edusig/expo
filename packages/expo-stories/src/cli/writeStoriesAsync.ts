@@ -1,7 +1,7 @@
 import fse from 'fs-extra';
 import path from 'path';
 
-import { StoryOptions, StoryFile } from '../types';
+import { StoryOptions, StoryFile } from '../../types';
 import { getStoriesDir, getStoryManifest } from './shared';
 
 export async function writeStoriesAsync(config: StoryOptions) {
@@ -10,7 +10,7 @@ export async function writeStoriesAsync(config: StoryOptions) {
 
   let template = `
       const storiesToExport = {}
-      ${stories.map(story => generateTemplateForStory(story)).join('')}
+      ${stories.map(story => generateTemplateForStory(story))}
       module.exports = storiesToExport
     `;
 
@@ -35,9 +35,9 @@ function generateTemplateForStory(story: StoryFile) {
   return `
     function ${story.id}Setup() {
       const stories = require("${story.fullPath}")
-      const file = stories.default || {}
-      file.id = "${story.id}"
-      file.title = file.title || '${defaultTitle}'
+      const parentConfig = stories.default || {}
+      parentConfig.id = "${story.id}"
+      parentConfig.title = parentConfig.title || '${defaultTitle}'
 
       Object.keys(stories).forEach((key) => {
         const Component = stories[key]
@@ -51,7 +51,7 @@ function generateTemplateForStory(story: StoryFile) {
             ...Component.storyConfig,
           }
 
-          Component.file = file
+          Component.parentConfig = parentConfig
 
           storiesToExport[storyId] = Component 
         }

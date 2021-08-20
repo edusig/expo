@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { StoryOptions } from '../types';
+import { StoryOptions } from '../../types';
 import { saveManifestAsync } from './saveManifestAsync';
-import { getStoryManifest, hashPath } from './shared';
+import { getStoryManifest, generateId } from './shared';
 import { writeStoriesAsync } from './writeStoriesAsync';
 
 export async function removeStoryAsync(relPath: string, config: StoryOptions) {
@@ -13,7 +13,7 @@ export async function removeStoryAsync(relPath: string, config: StoryOptions) {
 
   // 2. remove story based on provided relative file path
   const fullPath = path.resolve(watchRoot, relPath);
-  const id = hashPath(fullPath);
+  const id = generateId(fullPath);
   delete storyManifest.files[id];
 
   // 3. save updated manifest file to disk

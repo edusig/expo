@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { StoryOptions, StoryManifest } from '../types';
+import { StoryOptions, StoryManifest } from '../../types';
 
 export const storiesDirName = '__generated__/stories';
 
@@ -40,17 +40,8 @@ export function getStoriesFile(config: StoryOptions) {
   return storyFile;
 }
 
-export function hashPath(filePath: string) {
-  let id = filePath
-    .split('/')
-    .map(substr => substr.replace(/[-.]/g, ''))
-    .join('');
-
-  // if it starts with a digit, replace that digit with its char equivalent
-  if (id.match(/^\d/)) {
-    const charForDigit = String.fromCharCode(97 + Number(id.charAt(0)));
-    id = charForDigit + id.substring(1);
-  }
-
+export function generateId(filePath: string) {
+  // replaces all non-alphabet characters in the filePath
+  const id = filePath.replace(/[^a-zA-Z]+/gi, '');
   return id;
 }
