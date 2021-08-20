@@ -51,7 +51,7 @@ function writeStoriesAsync(config) {
                 case 0:
                     storyManifest = shared_1.getStoryManifest(config.projectRoot);
                     stories = Object.keys(storyManifest.files).map(function (id) { return storyManifest.files[id]; });
-                    template = "\n      const storiesToExport = {}\n      " + stories.map(function (story) { return generateTemplateForStory(story); }) + "\n      module.exports = storiesToExport\n    ";
+                    template = "\n      const storiesToExport = {}\n      " + stories.map(function (story) { return generateTemplateForStory(story); }).join('') + "\n      module.exports = storiesToExport\n    ";
                     if (!process.env.EXPO_DEBUG) {
                         template = require('esbuild').transformSync(template, {
                             minify: true,
@@ -74,6 +74,6 @@ function generateTemplateForStory(story) {
         .replace('.stories.tsx', '')
         .split('/')
         .pop();
-    return "\n    function " + story.id + "Setup() {\n      const stories = require(\"" + story.fullPath + "\")\n      const parentConfig = stories.default || {}\n      parentConfig.id = \"" + story.id + "\"\n      parentConfig.title = parentConfig.title || '" + defaultTitle + "'\n\n      Object.keys(stories).forEach((key) => {\n        const Component = stories[key]\n        \n        if (typeof Component === \"function\") {\n          const storyId = \"" + story.id + "\" + \"_\" + key\n          \n          Component.storyConfig = {\n            id: storyId,\n            name: key,\n            ...Component.storyConfig,\n          }\n\n          Component.parentConfig = parentConfig\n\n          storiesToExport[storyId] = Component \n        }\n      })\n    }\n\n    " + story.id + "Setup()\n  ";
+    return "\n    function " + story.id + "Setup() {\n      const stories = require(\"" + story.fullPath + "\")\n      const file = stories.default || {}\n      file.id = \"" + story.id + "\"\n      file.title = file.title || '" + defaultTitle + "'\n\n      Object.keys(stories).forEach((key) => {\n        const Component = stories[key]\n        \n        if (typeof Component === \"function\") {\n          const storyId = \"" + story.id + "\" + \"_\" + key\n          \n          Component.storyConfig = {\n            id: storyId,\n            name: key,\n            ...Component.storyConfig,\n          }\n\n          Component.file = file\n\n          storiesToExport[storyId] = Component \n        }\n      })\n    }\n\n    " + story.id + "Setup()\n  ";
 }
 //# sourceMappingURL=writeStoriesAsync.js.map
