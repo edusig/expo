@@ -1,12 +1,12 @@
 export type RootStackParamList = {
-  Home: undefined;
+  ['Story Files']: undefined;
   ['Selected Stories']: {
     title: string;
-    parentStoryId: string;
+    storyFileIds: string[];
   };
   ['Stories Detail']: {
     title: string;
-    selectedStoryId: string;
+    selectedStoryIds: string[];
     displayStoryTitle?: boolean;
   };
 };

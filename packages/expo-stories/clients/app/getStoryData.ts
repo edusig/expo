@@ -1,25 +1,48 @@
-export function getStoryData() {
-  // this is resolved via customization (extraNodeModules) in metro-config / webpack-config
-  const stories = require('generated-expo-stories');
+export type StoriesExport = Record<
+  string,
+  {
+    storyConfig: {
+      id: string;
+      name: string;
+    };
+    file: {
+      id: string;
+      title: string;
+    };
+  }
+>;
 
-  // aggregate stories
-  const storyData = {};
+export type StoryConfig = {
+  id: string;
+  name: string;
+  parentId: string;
+};
+
+export type StoryFile = {
+  id: string;
+  stories: StoryConfig[];
+  title: string;
+};
+
+export function getStoryData(stories: StoriesExport) {
+  const storyData: Record<string, StoryFile> = {};
 
   Object.keys(stories).forEach(key => {
     const story = stories[key];
-    const storyConfig = story.storyConfig;
-    const parentConfig = story.parentConfig;
 
-    if (!storyData[parentConfig.id]) {
-      storyData[parentConfig.id] = {
-        ...parentConfig,
+    const storyConfig = story.storyConfig;
+    const file = story.file;
+
+    if (!storyData[file.id]) {
+      storyData[file.id] = {
+        ...file,
         stories: [],
       };
     }
 
-    storyData[parentConfig.id].stories.push({
+    storyData[file.id].stories.push({
       ...storyConfig,
-      parentId: parentConfig.id,
+      parentId: file.id,
     });
   });
 
