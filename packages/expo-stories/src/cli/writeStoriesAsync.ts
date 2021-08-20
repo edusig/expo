@@ -10,7 +10,7 @@ export async function writeStoriesAsync(config: StoryOptions) {
 
   let template = `
       const storiesToExport = {}
-      ${stories.map(story => generateTemplateForStory(story))}
+      ${stories.map(story => generateTemplateForStory(story)).join('')}
       module.exports = storiesToExport
     `;
 
@@ -35,9 +35,9 @@ function generateTemplateForStory(story: StoryFile) {
   return `
     function ${story.id}Setup() {
       const stories = require("${story.fullPath}")
-      const parentConfig = stories.default || {}
-      parentConfig.id = "${story.id}"
-      parentConfig.title = parentConfig.title || '${defaultTitle}'
+      const file = stories.default || {}
+      file.id = "${story.id}"
+      file.title = file.title || '${defaultTitle}'
 
       Object.keys(stories).forEach((key) => {
         const Component = stories[key]
@@ -51,7 +51,7 @@ function generateTemplateForStory(story: StoryFile) {
             ...Component.storyConfig,
           }
 
-          Component.parentConfig = parentConfig
+          Component.file = file
 
           storiesToExport[storyId] = Component 
         }
