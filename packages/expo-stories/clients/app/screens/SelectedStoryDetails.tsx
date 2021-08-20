@@ -18,41 +18,31 @@ type SelectedStoriesDetailProps = {
   route: RouteProp<RootStackParamList, 'Stories Detail'>;
 };
 
+// this is resolved via customization (extraNodeModules) in metro-config / webpack-config
+// duplication is required as wrapping the require in a function breaks fast refresh
 const stories = require('generated-expo-stories');
-const storyData = getStoryData();
+const storyData = getStoryData(stories);
+
+const storiesById = Object.keys(storyData).reduce((acc, key) => {
+  storyData[key].stories.forEach(story => {
+    acc[story.id] = {
+      ...story,
+      component: stories[story.id] || null,
+    };
+  });
+
+  return acc;
+}, {});
 
 export function SelectedStoriesDetail({ navigation, route }: SelectedStoriesDetailProps) {
-  const { selectedStoryId = '', displayStoryTitle = true } = route.params || {};
-
-  let selectedStories: SelectedStory[] = [];
-
-  if (selectedStoryId !== '') {
-    Object.keys(storyData).forEach(parentId => {
-      if (selectedStoryId.includes(parentId)) {
-        const matchingStories =
-          storyData[parentId].stories
-            .map(story => {
-              if (story.id.startsWith(selectedStoryId)) {
-                return {
-                  ...story,
-                  component: stories[story.id],
-                };
-              }
-
-              return null;
-            })
-            .filter(Boolean) ?? [];
-
-        selectedStories = [...selectedStories, ...matchingStories];
-      }
-    });
-  }
+  const { selectedStoryIds = [], displayStoryTitle = true } = route.params || {};
+  const selectedStories: SelectedStory[] = selectedStoryIds.map(storyId => storiesById[storyId]);
 
   return (
     <View style={StyleSheet.absoluteFill}>
       <SafeAreaView style={styles.flexContainer}>
         <ScrollView style={styles.flexContainer}>
-          {selectedStories.map((story, index) => {
+          {selectedStories.map(story => {
             return (
               <View key={`${story.id}`} style={styles.storyRow}>
                 {displayStoryTitle && <Text style={styles.storyTitle}>{story?.name || ''}</Text>}

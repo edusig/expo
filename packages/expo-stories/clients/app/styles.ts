@@ -18,9 +18,6 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
   },
-  storyButtonsContainer: {
-    padding: spacing[4],
-  },
   storyButton: {
     borderRadius: 4,
     paddingVertical: spacing[4],

@@ -1,16 +1,17 @@
-const { getStoriesCacheDir, getStoriesFile } = require('./build/server/shared');
-const { writeRequiredFiles } = require('./build/server/writeRequiredFiles');
+const { initAsync } = require('./build/src/cli/commands/watch');
+const { getStoriesDir, getStoriesFile } = require('./build/src/cli/shared');
 
-function withExpoStories(metroConfig) {
-  writeRequiredFiles({
+async function withExpoStories(metroConfig) {
+  await initAsync({
     projectRoot: metroConfig.projectRoot,
   });
 
-  const storiesDir = getStoriesCacheDir(metroConfig);
+  // TODO - add build async
+
+  const storiesDir = getStoriesDir(metroConfig);
   const storyFile = getStoriesFile(metroConfig);
 
   metroConfig.resolver.extraNodeModules['generated-expo-stories'] = storyFile;
-
   metroConfig.watchFolders.push(storiesDir);
 
   return metroConfig;
