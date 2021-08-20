@@ -44,7 +44,7 @@ export async function addStoriesAsync(relPaths: string[], config: StoryOptions) 
 
 async function parseStoryConfigAsync(storyFile: StoryFile) {
   const { fullPath, id } = storyFile;
-  const file = fse.readFile(fullPath, { encoding: 'utf-8' });
+  const file = await fse.readFile(fullPath, { encoding: 'utf-8' });
 
   const acorn = require('acorn-loose');
 
@@ -73,6 +73,8 @@ async function parseStoryConfigAsync(storyFile: StoryFile) {
 
         if (type === 'FunctionDeclaration') {
           const name = node.declaration.id.name;
+          console.log({ node });
+
           storyData.stories.push({
             name,
             id: `${id}_${name}`,

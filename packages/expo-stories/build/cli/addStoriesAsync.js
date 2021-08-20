@@ -114,57 +114,63 @@ function parseStoryConfigAsync(storyFile) {
     return __awaiter(this, void 0, void 0, function () {
         var fullPath, id, file, acorn, parsed, storyData, defaultExport;
         return __generator(this, function (_a) {
-            fullPath = storyFile.fullPath, id = storyFile.id;
-            file = fs_extra_1.default.readFile(fullPath, { encoding: 'utf-8' });
-            acorn = require('acorn-loose');
-            parsed = acorn.parse(file, {
-                ecmaVersion: 2020,
-                sourceType: 'module',
-            });
-            storyData = __assign({}, storyFile);
-            parsed.body.forEach(function (node) {
-                if (node.type === 'ExportNamedDeclaration') {
-                    if (node.declaration !== null) {
-                        var type = node.declaration.type;
-                        if (type === 'VariableDeclaration') {
-                            node.declaration.declarations.forEach(function (d) {
-                                var name = d.id.name;
-                                storyData.stories.push({
-                                    name: name,
-                                    id: id + "_" + name,
-                                });
-                            });
-                        }
-                        if (type === 'FunctionDeclaration') {
-                            var name_1 = node.declaration.id.name;
-                            storyData.stories.push({
-                                name: name_1,
-                                id: id + "_" + name_1,
-                            });
-                        }
-                    }
-                    if (node.specifiers.length > 0) {
-                        node.specifiers.forEach(function (specifier) {
-                            var name = specifier.exported.name;
-                            if (!storyData.stories.includes(name)) {
-                                storyData.stories.push({
-                                    name: name,
-                                    id: id + "_" + name,
+            switch (_a.label) {
+                case 0:
+                    fullPath = storyFile.fullPath, id = storyFile.id;
+                    return [4 /*yield*/, fs_extra_1.default.readFile(fullPath, { encoding: 'utf-8' })];
+                case 1:
+                    file = _a.sent();
+                    acorn = require('acorn-loose');
+                    parsed = acorn.parse(file, {
+                        ecmaVersion: 2020,
+                        sourceType: 'module',
+                    });
+                    storyData = __assign({}, storyFile);
+                    parsed.body.forEach(function (node) {
+                        if (node.type === 'ExportNamedDeclaration') {
+                            if (node.declaration !== null) {
+                                var type = node.declaration.type;
+                                if (type === 'VariableDeclaration') {
+                                    node.declaration.declarations.forEach(function (d) {
+                                        var name = d.id.name;
+                                        storyData.stories.push({
+                                            name: name,
+                                            id: id + "_" + name,
+                                        });
+                                    });
+                                }
+                                if (type === 'FunctionDeclaration') {
+                                    var name_1 = node.declaration.id.name;
+                                    console.log({ node: node });
+                                    storyData.stories.push({
+                                        name: name_1,
+                                        id: id + "_" + name_1,
+                                    });
+                                }
+                            }
+                            if (node.specifiers.length > 0) {
+                                node.specifiers.forEach(function (specifier) {
+                                    var name = specifier.exported.name;
+                                    if (!storyData.stories.includes(name)) {
+                                        storyData.stories.push({
+                                            name: name,
+                                            id: id + "_" + name,
+                                        });
+                                    }
                                 });
                             }
+                        }
+                    });
+                    defaultExport = parsed.body.find(function (node) { return node.type === 'ExportDefaultDeclaration'; });
+                    if (defaultExport) {
+                        defaultExport.declaration.properties.forEach(function (property) {
+                            var key = property.key.name;
+                            var value = property.value.value;
+                            storyData[key] = value;
                         });
                     }
-                }
-            });
-            defaultExport = parsed.body.find(function (node) { return node.type === 'ExportDefaultDeclaration'; });
-            if (defaultExport) {
-                defaultExport.declaration.properties.forEach(function (property) {
-                    var key = property.key.name;
-                    var value = property.value.value;
-                    storyData[key] = value;
-                });
+                    return [2 /*return*/, storyData];
             }
-            return [2 /*return*/, storyData];
         });
     });
 }
