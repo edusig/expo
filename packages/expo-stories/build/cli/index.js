@@ -51,6 +51,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var commander_1 = require("commander");
+var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var build_1 = require("./commands/build");
 var init_1 = require("./commands/init");
@@ -65,10 +66,17 @@ initCommand
     .option('-w --watchRoot <path>', 'the directory to search for .stories files', process.cwd())
     .option('--no-watch', 'disable watching source file changes', false)
     .action(function (options) { return __awaiter(void 0, void 0, void 0, function () {
-    var config;
+    var pkgPath, pkgJson, config;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                pkgPath = path_1.default.resolve(process.cwd(), 'package.json');
+                if (fs_1.default.existsSync(pkgPath)) {
+                    pkgJson = require(pkgPath);
+                    if (pkgJson.expoStories != null) {
+                        options = __assign(__assign({}, options), pkgJson.expoStories);
+                    }
+                }
                 config = __assign(__assign({}, shared_1.defaultConfig), options);
                 config.watchRoot = path_1.default.resolve(process.cwd(), config.watchRoot);
                 return [4 /*yield*/, init_1.initAsync(config)];

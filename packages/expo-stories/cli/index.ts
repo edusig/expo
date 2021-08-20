@@ -1,4 +1,5 @@
 import { program, Command } from 'commander';
+import fs from 'fs';
 import path from 'path';
 
 import { buildAsync } from './commands/build';
@@ -21,6 +22,19 @@ initCommand
   .option('-w --watchRoot <path>', 'the directory to search for .stories files', process.cwd())
   .option('--no-watch', 'disable watching source file changes', false)
   .action(async options => {
+    const pkgPath = path.resolve(process.cwd(), 'package.json');
+
+    if (fs.existsSync(pkgPath)) {
+      const pkgJson = require(pkgPath);
+
+      if (pkgJson.expoStories != null) {
+        options = {
+          ...options,
+          ...pkgJson.expoStories,
+        };
+      }
+    }
+
     const config = {
       ...defaultConfig,
       ...options,
