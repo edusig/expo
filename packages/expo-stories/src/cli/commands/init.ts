@@ -1,7 +1,7 @@
 import fse from 'fs-extra';
 import path from 'path';
 
-import { StoryOptions } from '../../types';
+import { StoryOptions } from '../../../types';
 import { getStoriesDir } from '../shared';
 
 export async function initAsync(config: StoryOptions) {

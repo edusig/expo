@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { StoryOptions } from '../types';
+import { StoryOptions } from '../../types';
 import { saveManifestAsync } from './saveManifestAsync';
 import { getStoryManifest, generateId } from './shared';
 import { writeStoriesAsync } from './writeStoriesAsync';
@@ -18,7 +18,7 @@ export async function removeStoryAsync(relPath: string, config: StoryOptions) {
 
   // 3. save updated manifest file to disk
   await saveManifestAsync(storyManifest, config);
-  
+
   // 4. write js file based on updated manifest
   await writeStoriesAsync(config);
 }

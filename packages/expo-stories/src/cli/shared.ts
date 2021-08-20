@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { StoryOptions, StoryManifest } from '../types';
+import { StoryOptions, StoryManifest } from '../../types';
 
 export const storiesDirName = '__generated__/stories';
 
