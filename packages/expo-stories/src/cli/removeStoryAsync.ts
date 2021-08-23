@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { StoryOptions } from '../../types';
+import { StoryOptions } from '../types';
 import { saveManifestAsync } from './saveManifestAsync';
 import { getStoryManifest, generateId } from './shared';
 import { writeStoriesAsync } from './writeStoriesAsync';

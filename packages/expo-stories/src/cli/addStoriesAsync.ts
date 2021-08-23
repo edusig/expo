@@ -1,7 +1,7 @@
 import fse from 'fs-extra';
 import path from 'path';
 
-import { StoryOptions, StoryFile, StoryManifest } from '../../types';
+import { StoryOptions, StoryFile, StoryManifest } from '../types';
 import { saveManifestAsync } from './saveManifestAsync';
 import { getStoryManifest, generateId } from './shared';
 import { writeStoriesAsync } from './writeStoriesAsync';

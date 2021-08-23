@@ -1,6 +1,6 @@
 import sane from 'sane';
 
-import { StoryOptions } from '../../../types';
+import { StoryOptions } from '../../types';
 import { addStoriesAsync } from '../addStoriesAsync';
 import { removeStoryAsync } from '../removeStoryAsync';
 
