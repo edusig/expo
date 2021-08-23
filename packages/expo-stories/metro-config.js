@@ -20,8 +20,6 @@ async function withExpoStories(metroConfig) {
 
   await buildAsync(storyConfig);
 
-  throw new Error('123')
-
   const storiesDir = getStoriesDir(metroConfig);
   const storyFile = getStoriesFile(metroConfig);
 
