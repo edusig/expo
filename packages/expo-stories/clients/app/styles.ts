@@ -49,4 +49,24 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  listContainer: {
+    paddingBottom: spacing[24] + spacing[6],
+  },
+  seeSelectionButtonContainer: {
+    position: 'absolute',
+    bottom: spacing[24],
+    left: 0,
+    right: 0,
+    paddingHorizontal: spacing[6],
+  },
+  sectionHeaderContainer: {
+    paddingTop: spacing[6],
+    paddingBottom: spacing[2],
+    paddingHorizontal: spacing[3],
+  },
+  sectionHeader: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: lightTheme.text.default,
+  },
 });

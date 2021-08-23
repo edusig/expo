@@ -1,5 +1,5 @@
-const { initAsync } = require('./build/src/cli/commands/watch');
-const { getStoriesDir, getStoriesFile } = require('./build/src/cli/shared');
+const { initAsync } = require('./build/cli/commands/init');
+const { getStoriesDir, getStoriesFile } = require('./build/cli/shared');
 
 async function withExpoStories(metroConfig) {
   await initAsync({
