@@ -1,9 +1,12 @@
 import bunyan from '@expo/bunyan';
+import { INTERNAL_CALLSITES_REGEX } from '@expo/metro-config';
 import { LogUpdater, PackagerLogsStream, LogRecord, ProjectUtils } from '@expo/xdl';
 import chalk from 'chalk';
 import findLastIndex from 'lodash/findLastIndex';
 import ProgressBar from 'progress';
 
+// This is ported / mostly copy-pasted from expo-cli/src/exp.ts
+// Close to matching expo-cli's `runMetroDevServerAsync()` logger
 export function createMetroLogger(projectRoot: string) {
   const logLines = (msg: any, logFn: (...args: any[]) => void) => {
     if (typeof msg === 'string') {
@@ -58,11 +61,11 @@ export function createMetroLogger(projectRoot: string) {
       }
 
       let isCollapsed = false;
-      // const fileNameOrUrl = matchFileNameOrURLFromStackTrace(line);
-      // if (fileNameOrUrl) {
-      //   // Use the same regex we use in Metro config to filter out traces:
-      //   isCollapsed = INTERNAL_CALLSITES_REGEX.test(fileNameOrUrl);
-      // }
+      const fileNameOrUrl = matchFileNameOrURLFromStackTrace(line);
+      if (fileNameOrUrl) {
+        // Use the same regex we use in Metro config to filter out traces:
+        isCollapsed = INTERNAL_CALLSITES_REGEX.test(fileNameOrUrl);
+      }
 
       // If a file is collapsed, print it with dim styling.
       const style = isCollapsed ? chalk.dim : (message: string) => message;
@@ -161,4 +164,32 @@ export function createMetroLogger(projectRoot: string) {
   });
 
   return logger;
+}
+
+/**
+ * Given a line from a metro stack trace, this can attempt to extract
+ * the file name or URL, omitting the code location.
+ * Can be used to filter files from the stacktrace like LogBox.
+ *
+ * @param traceLine
+ */
+export function matchFileNameOrURLFromStackTrace(traceMessage: string): string | null {
+  if (!traceMessage.includes(' in ')) return null;
+  const traceLine = traceMessage.split(' in ')[0]?.trim();
+  // Is URL
+  // "http://127.0.0.1:19000/index.bundle?platform=ios&dev=true&hot=false&minify=false:110910:3 in global code"
+  if (traceLine.match(/https?:\/\//g)) {
+    const [url, params] = traceLine.split('?');
+
+    const results: string[] = [url];
+    if (params) {
+      const paramsWithoutLocation = params.replace(/:(\d+)/g, '').trim();
+      results.push(paramsWithoutLocation);
+    }
+    return results.filter(Boolean).join('?');
+  }
+
+  // "node_modules/react-native/Libraries/LogBox/LogBox.js:117:10 in registerWarning"
+  // "somn.js:1:0 in <global>"
+  return traceLine.replace(/:(\d+)/g, '').trim();
 }

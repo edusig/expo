@@ -1,45 +1,33 @@
-import spawnAsync from '@expo/spawn-async';
+import { Command } from '@expo/commander';
+import chalk from 'chalk';
 import fs from 'fs';
 import inquirer from 'inquirer';
-import path from 'path';
 
-import { podInstallAsync } from '../CocoaPods';
 import Logger from '../Logger';
 import { getProjectRoot } from '../run-stories/helpers';
-import { clearNativeCache } from '../run-stories/tasks/clearNativeCache';
-import { copyTemplateFiles } from '../run-stories/tasks/copyTemplateFiles';
 import { getPackageNameAsync } from '../run-stories/tasks/getPackageNameAsync';
 import { initializeDefaultsAsync } from '../run-stories/tasks/initializeDefaultsAsync';
 import { initializeExpoAppAsync } from '../run-stories/tasks/initializeExpoAppAsync';
 import { runPrebuildAsync } from '../run-stories/tasks/runPrebuildAsync';
 import { runStoryProcessesAsync } from '../run-stories/tasks/runStoryProcessesAsync';
 
+export default (program: Command) => {
+  program
+    .command('run-stories [packageName]')
+    .option('-r, --rebuild', 'Rebuild the project from scratch')
+    .option('-p, --platform <string>', 'The platform the app will run in')
+    .asyncAction(action);
+};
+
 type Platform = 'android' | 'ios' | 'web';
 
 type Action = {
   platform: Platform;
   rebuild: boolean;
-  clearCache: boolean;
 };
 
-async function selectPlatformAsync(): Promise<Platform> {
-  const { selectedPlatform } = await inquirer.prompt({
-    type: 'list',
-    name: 'selectedPlatform',
-    message: 'Which platform are you working on?',
-    choices: [
-      { value: 'ios', name: 'iOS' },
-      { value: 'android', name: 'Android' },
-      { value: 'web', name: 'Web' },
-    ],
-  });
-
-  return selectedPlatform;
-}
-
-async function action(name: string, { platform, rebuild = false, clearCache = false }: Action) {
+async function action(name: string, { platform, rebuild = false }: Action) {
   const packageName = await getPackageNameAsync(name);
-
   const projectRoot = getProjectRoot(packageName);
 
   await initializeDefaultsAsync(packageName);
@@ -48,45 +36,31 @@ async function action(name: string, { platform, rebuild = false, clearCache = fa
 
   if (rebuild || isFirstBuild) {
     Logger.log();
-    Logger.info(`🛠  Scaffolding fresh story loader project for ${packageName}`);
+    Logger.log(`🛠   Scaffolding a fresh project for ${chalk.bold(packageName)} in expo/stories`);
 
     await initializeExpoAppAsync(packageName);
 
-    // 4. yarn + install deps
-    Logger.log('🧶 Installing js dependencies');
-    await spawnAsync('yarn', ['install'], { cwd: projectRoot });
-
-    Logger.log('🔌 Applying config plugins');
+    Logger.log('🔌  Applying config plugins');
     await runPrebuildAsync(packageName);
-    
-    copyTemplateFiles(packageName);
-  }
-
-  if (clearCache) {
-    Logger.log('🧶 Clearing native cache...');
-    clearNativeCache(packageName);
   }
 
   if (!platform) {
-    platform = await selectPlatformAsync();
+    const { selectedPlatform } = await inquirer.prompt({
+      type: 'list',
+      name: 'selectedPlatform',
+      message: 'Which platform are you working on?',
+      choices: [
+        { value: 'ios', name: 'iOS' },
+        { value: 'android', name: 'Android' },
+        { value: 'web', name: 'Web' },
+      ],
+    });
+
+    platform = selectedPlatform;
   }
 
-  if (rebuild || isFirstBuild) {
-    Logger.log('☕️ Installing native dependencies');
-    await podInstallAsync(path.resolve(projectRoot, 'ios'));
-  }
-
-  Logger.log(`🛠  Building for ${platform}...this may take a few minutes`);
+  Logger.log(`🛠   Building for ${platform}...this may take a few minutes`);
   Logger.log();
 
   await runStoryProcessesAsync(packageName, platform);
 }
-
-export default (program: any) => {
-  program
-    .command('run-stories [packageName]')
-    .option('-r, --rebuild', 'Rebuild the project from scratch')
-    .option('-c, --clear-cache', 'Clear and reinstall depedencies')
-    .option('-p, --platform <string>', 'The platform the app will run in')
-    .asyncAction(action);
-};

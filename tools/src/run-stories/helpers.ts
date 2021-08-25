@@ -1,22 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 
+// eslint-disable-next-line
+const expoRepoRoot = path.resolve(__dirname, '../../../');
+
 export function getPackageRoot(packageName: string) {
-  // eslint-disable-next-line
-  const packageRoot = path.resolve(__dirname, '../../../packages', packageName);
+  const packageRoot = path.resolve(expoRepoRoot, 'packages', packageName);
 
   if (!fs.existsSync(packageRoot)) {
-    throw new Error(
-      `${packageName} does not exist - are you sure you selected the correct package?`
-    );
+    throw new Error(`${packageName} does not exist - are you sure you have the correct package?`);
   }
 
   return packageRoot;
 }
 
 export function getExamplesRoot() {
-  // eslint-disable-next-line
-  const examplesRoot = path.resolve(__dirname, '../../../story-loaders');
+  const examplesRoot = path.resolve(expoRepoRoot, 'stories');
 
   if (!fs.existsSync(examplesRoot)) {
     fs.mkdirSync(examplesRoot);
@@ -40,4 +39,10 @@ export function getTargetName(packageName: string) {
 
 export function getProjectName(packageName: string) {
   return `${packageName}-stories`;
+}
+
+export function getTemplateRoot(packageName: string) {
+  const projectRoot = getProjectRoot(packageName);
+  const templateRoot = path.resolve(projectRoot, '../../template-files/stories-templates');
+  return templateRoot;
 }

@@ -11,6 +11,8 @@ type Platform = 'android' | 'ios' | 'web';
 const CTRL_C = '\u0003';
 const CTRL_D = '\u0004';
 
+// Runs `expo run:ios|android` to build the app w/ nice logging
+// Starts a metro dev server and an expo stories server
 export async function runStoryProcessesAsync(packageName: string, platform: Platform) {
   if (platform === 'web') {
     runWebProcesses(packageName);
