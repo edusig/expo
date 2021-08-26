@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
   update.keep = YES;
   update.bundleUrl = bundleUrl;
   update.assets = processedAssets;
-  update.manifest = manifest.rawManifestJSON;
+  update.manifestJSON = manifest.rawManifestJSON;
 
   if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
     NSDictionary *headersDictionary = ((NSHTTPURLResponse *)response).allHeaderFields;

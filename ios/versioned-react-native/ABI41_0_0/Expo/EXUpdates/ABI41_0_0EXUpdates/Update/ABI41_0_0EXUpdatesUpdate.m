@@ -53,7 +53,7 @@ NSString * const ABI41_0_0EXUpdatesUpdateErrorDomain = @"ABI41_0_0EXUpdatesUpdat
   update.scopeKey = scopeKey;
   update.commitTime = commitTime;
   update.runtimeVersion = runtimeVersion;
-  update.manifest = manifest;
+  update.manifestJSON = manifest;
   update.status = status;
   update.keep = keep;
   return update;

@@ -53,7 +53,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
   update.scopeKey = scopeKey;
   update.commitTime = commitTime;
   update.runtimeVersion = runtimeVersion;
-  update.manifest = manifest;
+  update.manifestJSON = manifest;
   update.status = status;
   update.keep = keep;
   return update;
