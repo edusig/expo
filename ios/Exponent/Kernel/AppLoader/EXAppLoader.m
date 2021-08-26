@@ -417,7 +417,7 @@ NSTimeInterval const kEXJSBundleTimeout = 60 * 5;
     }
     mutableManifestJSON[@"loadedFromCache"] = @(loadedFromCache);
 
-    success([EXUpdatesUpdate rawManifestForJSON:[NSDictionary dictionaryWithDictionary:mutableManifestJSON]]);
+    success([EXUpdatesUpdate manifestForManifestJSON:[NSDictionary dictionaryWithDictionary:mutableManifestJSON]]);
   } errorBlock:^(NSError * _Nonnull error) {
 #if DEBUG
     if ([EXEnvironment sharedEnvironment].isDetached && error &&

@@ -46,7 +46,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
                       config:(EXUpdatesConfig *)config
                     database:(EXUpdatesDatabase *)database
 {
-  EXUpdatesUpdate *update = [[self alloc] initWithRawManifest:[self rawManifestForJSON:(manifest ?: @{})]
+  EXUpdatesUpdate *update = [[self alloc] initWithRawManifest:[self manifestForManifestJSON:(manifest ?: @{})]
                                                        config:config
                                                      database:database];
   update.updateId = updateId;
@@ -124,7 +124,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
   return _assets;
 }
 
-+ (nonnull EXManifestsManifest *)rawManifestForJSON:(nonnull NSDictionary *)manifestJSON {
++ (nonnull EXManifestsManifest *)manifestForManifestJSON:(nonnull NSDictionary *)manifestJSON {
   EXManifestsManifest *rawManifest;
   if (manifestJSON[@"releaseId"]) {
     rawManifest = [[EXManifestsLegacyManifest alloc] initWithRawManifestJSON:manifestJSON];

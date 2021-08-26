@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, EXUpdatesUpdateStatus) {
                                     config:(EXUpdatesConfig *)config
                                   database:(nullable EXUpdatesDatabase *)database;
 
-+ (EXManifestsManifest *)rawManifestForJSON:(NSDictionary *)manifestJSON;
++ (EXManifestsManifest *)manifestForManifestJSON:(NSDictionary *)manifestJSON;
 
 @end
 

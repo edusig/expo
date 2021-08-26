@@ -46,7 +46,7 @@ NSString * const ABI41_0_0EXUpdatesUpdateErrorDomain = @"ABI41_0_0EXUpdatesUpdat
                       config:(ABI41_0_0EXUpdatesConfig *)config
                     database:(ABI41_0_0EXUpdatesDatabase *)database
 {
-  ABI41_0_0EXUpdatesUpdate *update = [[self alloc] initWithRawManifest:[self rawManifestForJSON:(manifest ?: @{})]
+  ABI41_0_0EXUpdatesUpdate *update = [[self alloc] initWithRawManifest:[self manifestForManifestJSON:(manifest ?: @{})]
                                                        config:config
                                                      database:database];
   update.updateId = updateId;
@@ -124,7 +124,7 @@ NSString * const ABI41_0_0EXUpdatesUpdateErrorDomain = @"ABI41_0_0EXUpdatesUpdat
   return _assets;
 }
 
-+ (nonnull ABI41_0_0EXManifestsManifest *)rawManifestForJSON:(nonnull NSDictionary *)manifestJSON {
++ (nonnull ABI41_0_0EXManifestsManifest *)manifestForManifestJSON:(nonnull NSDictionary *)manifestJSON {
   ABI41_0_0EXManifestsManifest *rawManifest;
   if (manifestJSON[@"releaseId"]) {
     rawManifest = [[ABI41_0_0EXManifestsLegacyManifest alloc] initWithRawManifestJSON:manifestJSON];

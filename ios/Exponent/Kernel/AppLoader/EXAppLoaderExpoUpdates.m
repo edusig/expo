@@ -485,7 +485,7 @@ NS_ASSUME_NONNULL_BEGIN
     mutableManifest[@"isVerified"] = @(YES);
   }
 
-  return [EXUpdatesUpdate rawManifestForJSON:[mutableManifest copy]];
+  return [EXUpdatesUpdate manifestForManifestJSON:[mutableManifest copy]];
 }
 
 + (BOOL)_isAnonymousExperience:(EXManifestsManifest *)manifest
