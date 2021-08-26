@@ -62,7 +62,7 @@ NSString *kEXHomeManifestResourceName = @"kernel-manifest";
 
 #pragma mark - interfacing with home JS
 
-- (void)addHistoryItemWithUrl:(NSURL *)manifestUrl manifest:(EXManifestsRawManifest *)manifest
+- (void)addHistoryItemWithUrl:(NSURL *)manifestUrl manifest:(EXManifestsManifest *)manifest
 {
   if (!manifest || !manifestUrl || [manifest.legacyId isEqualToString:@"@exponent/home"] || [manifest.legacyId isEqualToString:@"@expo-dogfooding/home"]) {
     return;
@@ -128,7 +128,7 @@ NSString *kEXHomeManifestResourceName = @"kernel-manifest";
   }
 }
 
-- (NSString *)bundleResourceNameForAppFetcher:(__unused EXAppFetcher *)appFetcher withManifest:(nonnull __unused EXManifestsRawManifest *)manifest
+- (NSString *)bundleResourceNameForAppFetcher:(__unused EXAppFetcher *)appFetcher withManifest:(nonnull __unused EXManifestsManifest *)manifest
 {
   return kEXHomeBundleResourceName;
 }
@@ -162,7 +162,7 @@ NSString *kEXHomeManifestResourceName = @"kernel-manifest";
   return initialHomeUrl;
 }
 
-+ (EXManifestsRawManifest * _Nullable)bundledHomeManifest
++ (EXManifestsManifest * _Nullable)bundledHomeManifest
 {
   NSString *manifestJson = nil;
   BOOL usesNSBundleManifest = NO;

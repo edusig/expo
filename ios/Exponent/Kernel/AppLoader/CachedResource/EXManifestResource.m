@@ -54,7 +54,7 @@ NSString * const kEXPublicKeyUrl = @"https://exp.host/--/manifest-public-key";
   if (jsonManifestObjArray) {
     for (id providedManifest in jsonManifestObjArray) {
       if ([providedManifest isKindOfClass:[NSDictionary class]]) {
-        EXManifestsRawManifest *providedRawManifest = [EXUpdatesUpdate rawManifestForJSON:providedManifest];
+        EXManifestsManifest *providedRawManifest = [EXUpdatesUpdate rawManifestForJSON:providedManifest];
         NSString *sdkVersion = providedRawManifest.sdkVersion;
         if (sdkVersion && [[EXVersions sharedInstance] supportsVersion:sdkVersion]) {
           return providedManifest;
@@ -125,7 +125,7 @@ NSString * const kEXPublicKeyUrl = @"https://exp.host/--/manifest-public-key";
       }
     }
 
-    EXManifestsRawManifest *manifest = [EXUpdatesUpdate rawManifestForJSON:innerManifestObj];
+    EXManifestsManifest *manifest = [EXUpdatesUpdate rawManifestForJSON:innerManifestObj];
 
     NSError *sdkVersionError = [self verifyManifestSdkVersion:manifest];
     if (sdkVersionError) {
@@ -328,7 +328,7 @@ NSString * const kEXPublicKeyUrl = @"https://exp.host/--/manifest-public-key";
   return nil;
 }
 
-- (NSError *)verifyManifestSdkVersion:(EXManifestsRawManifest *)maybeManifest
+- (NSError *)verifyManifestSdkVersion:(EXManifestsManifest *)maybeManifest
 {
   NSString *errorCode;
   NSDictionary *metadata;

@@ -34,8 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSURL *manifestUrl;
 @property (nonatomic, strong, nullable) NSURL *httpManifestUrl;
 
-@property (nonatomic, strong, nullable) EXManifestsRawManifest *confirmedManifest;
-@property (nonatomic, strong, nullable) EXManifestsRawManifest *optimisticManifest;
+@property (nonatomic, strong, nullable) EXManifestsManifest *confirmedManifest;
+@property (nonatomic, strong, nullable) EXManifestsManifest *optimisticManifest;
 @property (nonatomic, strong, nullable) NSData *bundle;
 @property (nonatomic, assign) EXAppLoaderRemoteUpdateStatus remoteUpdateStatus;
 @property (nonatomic, assign) BOOL shouldShowRemoteUpdateStatus;
@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
   return kEXAppLoaderStatusNew;
 }
 
-- (nullable EXManifestsRawManifest *)manifest
+- (nullable EXManifestsManifest *)manifest
 {
   if (_confirmedManifest) {
     return _confirmedManifest;
@@ -400,7 +400,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (void)_setOptimisticManifest:(EXManifestsRawManifest *)manifest
+- (void)_setOptimisticManifest:(EXManifestsManifest *)manifest
 {
   _optimisticManifest = manifest;
   if (self.delegate) {
@@ -408,7 +408,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (void)_setShouldShowRemoteUpdateStatus:(EXManifestsRawManifest *)manifest
+- (void)_setShouldShowRemoteUpdateStatus:(EXManifestsManifest *)manifest
 {
   // we don't want to show the cached experience alert when Updates.reloadAsync() is called
   if (_shouldUseCacheOnly) {
@@ -464,7 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 # pragma mark - manifest processing
 
-- (EXManifestsRawManifest *)_processManifest:(EXManifestsRawManifest *)manifest
+- (EXManifestsManifest *)_processManifest:(EXManifestsManifest *)manifest
 {
   NSMutableDictionary *mutableManifest = [manifest.rawManifestJSON mutableCopy];
   if (!mutableManifest[@"isVerified"] && ![EXKernelLinkingManager isExpoHostedUrl:_httpManifestUrl] && !EXEnvironment.sharedEnvironment.isDetached){
@@ -488,7 +488,7 @@ NS_ASSUME_NONNULL_BEGIN
   return [EXUpdatesUpdate rawManifestForJSON:[mutableManifest copy]];
 }
 
-+ (BOOL)_isAnonymousExperience:(EXManifestsRawManifest *)manifest
++ (BOOL)_isAnonymousExperience:(EXManifestsManifest *)manifest
 {
   return manifest.legacyId != nil && [manifest.legacyId hasPrefix:@"@anonymous/"];
 }

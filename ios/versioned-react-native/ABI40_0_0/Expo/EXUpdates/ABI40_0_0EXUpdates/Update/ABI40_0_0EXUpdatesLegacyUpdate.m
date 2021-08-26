@@ -15,7 +15,7 @@ static NSString * const ABI40_0_0EXUpdatesExpoTestDomain = @"expo.test";
 
 @implementation ABI40_0_0EXUpdatesLegacyUpdate
 
-+ (ABI40_0_0EXUpdatesUpdate *)updateWithLegacyManifest:(ABI40_0_0EXManifestsLegacyRawManifest *)manifest
++ (ABI40_0_0EXUpdatesUpdate *)updateWithLegacyManifest:(ABI40_0_0EXManifestsLegacyManifest *)manifest
                                        config:(ABI40_0_0EXUpdatesConfig *)config
                                      database:(ABI40_0_0EXUpdatesDatabase *)database
 {
@@ -105,7 +105,7 @@ static NSString * const ABI40_0_0EXUpdatesExpoTestDomain = @"expo.test";
   return update;
 }
 
-+ (NSURL *)bundledAssetBaseUrlWithManifest:(ABI40_0_0EXManifestsLegacyRawManifest *)manifest config:(ABI40_0_0EXUpdatesConfig *)config
++ (NSURL *)bundledAssetBaseUrlWithManifest:(ABI40_0_0EXManifestsLegacyManifest *)manifest config:(ABI40_0_0EXUpdatesConfig *)config
 {
   NSURL *manifestUrl = config.updateUrl;
   NSString *host = manifestUrl.host;

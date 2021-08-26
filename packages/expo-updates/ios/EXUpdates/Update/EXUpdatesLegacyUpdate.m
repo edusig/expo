@@ -15,7 +15,7 @@ static NSString * const EXUpdatesExpoTestDomain = @"expo.test";
 
 @implementation EXUpdatesLegacyUpdate
 
-+ (EXUpdatesUpdate *)updateWithLegacyManifest:(EXManifestsLegacyRawManifest *)manifest
++ (EXUpdatesUpdate *)updateWithLegacyManifest:(EXManifestsLegacyManifest *)manifest
                                        config:(EXUpdatesConfig *)config
                                      database:(EXUpdatesDatabase *)database
 {
@@ -105,7 +105,7 @@ static NSString * const EXUpdatesExpoTestDomain = @"expo.test";
   return update;
 }
 
-+ (NSURL *)bundledAssetBaseUrlWithManifest:(EXManifestsLegacyRawManifest *)manifest config:(EXUpdatesConfig *)config
++ (NSURL *)bundledAssetBaseUrlWithManifest:(EXManifestsLegacyManifest *)manifest config:(EXUpdatesConfig *)config
 {
   NSURL *manifestUrl = config.updateUrl;
   NSString *host = manifestUrl.host;
