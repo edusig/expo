@@ -20,7 +20,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
 
 @implementation EXUpdatesUpdate
 
-- (instancetype)initWithRawManifest:(EXManifestsManifest *)manifest
+- (instancetype)initWithManifest:(EXManifestsManifest *)manifest
                              config:(EXUpdatesConfig *)config
                            database:(nullable EXUpdatesDatabase *)database
 {
@@ -46,7 +46,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
                       config:(EXUpdatesConfig *)config
                     database:(EXUpdatesDatabase *)database
 {
-  EXUpdatesUpdate *update = [[self alloc] initWithRawManifest:[self manifestForManifestJSON:(manifest ?: @{})]
+  EXUpdatesUpdate *update = [[self alloc] initWithManifest:[self manifestForManifestJSON:(manifest ?: @{})]
                                                        config:config
                                                      database:database];
   update.updateId = updateId;
@@ -106,7 +106,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
                                                     config:config
                                                   database:database];
   } else {
-    return [EXUpdatesBareUpdate updateWithBareRawManifest:[[EXManifestsBareManifest alloc] initWithRawManifestJSON:manifest]
+    return [EXUpdatesBareUpdate updateWithBareManifest:[[EXManifestsBareManifest alloc] initWithRawManifestJSON:manifest]
                                                    config:config
                                                  database:database];
   }
@@ -125,15 +125,15 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
 }
 
 + (nonnull EXManifestsManifest *)manifestForManifestJSON:(nonnull NSDictionary *)manifestJSON {
-  EXManifestsManifest *rawManifest;
+  EXManifestsManifest *manifest;
   if (manifestJSON[@"releaseId"]) {
-    rawManifest = [[EXManifestsLegacyManifest alloc] initWithRawManifestJSON:manifestJSON];
+    manifest = [[EXManifestsLegacyManifest alloc] initWithRawManifestJSON:manifestJSON];
   } else if (manifestJSON[@"metadata"]) {
-    rawManifest = [[EXManifestsNewManifest alloc] initWithRawManifestJSON:manifestJSON];
+    manifest = [[EXManifestsNewManifest alloc] initWithRawManifestJSON:manifestJSON];
   } else {
-    rawManifest = [[EXManifestsBareManifest alloc] initWithRawManifestJSON:manifestJSON];
+    manifest = [[EXManifestsBareManifest alloc] initWithRawManifestJSON:manifestJSON];
   }
-  return rawManifest;
+  return manifest;
 }
 
 @end

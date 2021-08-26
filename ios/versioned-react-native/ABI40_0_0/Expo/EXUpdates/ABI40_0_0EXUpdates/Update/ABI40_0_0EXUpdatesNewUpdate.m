@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
                                     config:(ABI40_0_0EXUpdatesConfig *)config
                                   database:(ABI40_0_0EXUpdatesDatabase *)database
 {
-  ABI40_0_0EXUpdatesUpdate *update = [[ABI40_0_0EXUpdatesUpdate alloc] initWithRawManifest:manifest
+  ABI40_0_0EXUpdatesUpdate *update = [[ABI40_0_0EXUpdatesUpdate alloc] initWithManifest:manifest
                                                                   config:config
                                                                 database:database];
 

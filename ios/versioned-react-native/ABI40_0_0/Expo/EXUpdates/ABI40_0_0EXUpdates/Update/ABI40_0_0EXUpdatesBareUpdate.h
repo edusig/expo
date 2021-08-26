@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ABI40_0_0EXUpdatesBareUpdate : NSObject
 
-+ (ABI40_0_0EXUpdatesUpdate *)updateWithBareRawManifest:(ABI40_0_0EXManifestsBareManifest *)manifest
++ (ABI40_0_0EXUpdatesUpdate *)updateWithBareManifest:(ABI40_0_0EXManifestsBareManifest *)manifest
                                         config:(ABI40_0_0EXUpdatesConfig *)config
                                       database:(ABI40_0_0EXUpdatesDatabase *)database;
 

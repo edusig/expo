@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EXUpdatesBareUpdate : NSObject
 
-+ (EXUpdatesUpdate *)updateWithBareRawManifest:(EXManifestsBareManifest *)manifest
++ (EXUpdatesUpdate *)updateWithBareManifest:(EXManifestsBareManifest *)manifest
                                         config:(EXUpdatesConfig *)config
                                       database:(EXUpdatesDatabase *)database;
 

@@ -10,11 +10,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ABI41_0_0EXUpdatesBareUpdate
 
-+ (ABI41_0_0EXUpdatesUpdate *)updateWithBareRawManifest:(ABI41_0_0EXManifestsBareManifest *)manifest
++ (ABI41_0_0EXUpdatesUpdate *)updateWithBareManifest:(ABI41_0_0EXManifestsBareManifest *)manifest
                                         config:(ABI41_0_0EXUpdatesConfig *)config
                                       database:(ABI41_0_0EXUpdatesDatabase *)database
 {
-  ABI41_0_0EXUpdatesUpdate *update = [[ABI41_0_0EXUpdatesUpdate alloc] initWithRawManifest:manifest
+  ABI41_0_0EXUpdatesUpdate *update = [[ABI41_0_0EXUpdatesUpdate alloc] initWithManifest:manifest
                                                                   config:config
                                                                 database:database];
 

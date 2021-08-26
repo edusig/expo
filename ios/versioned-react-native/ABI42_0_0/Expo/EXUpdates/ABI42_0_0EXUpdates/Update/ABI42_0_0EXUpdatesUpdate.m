@@ -20,7 +20,7 @@ NSString * const ABI42_0_0EXUpdatesUpdateErrorDomain = @"ABI42_0_0EXUpdatesUpdat
 
 @implementation ABI42_0_0EXUpdatesUpdate
 
-- (instancetype)initWithRawManifest:(ABI42_0_0EXManifestsManifest *)manifest
+- (instancetype)initWithManifest:(ABI42_0_0EXManifestsManifest *)manifest
                              config:(ABI42_0_0EXUpdatesConfig *)config
                            database:(nullable ABI42_0_0EXUpdatesDatabase *)database
 {
@@ -46,7 +46,7 @@ NSString * const ABI42_0_0EXUpdatesUpdateErrorDomain = @"ABI42_0_0EXUpdatesUpdat
                       config:(ABI42_0_0EXUpdatesConfig *)config
                     database:(ABI42_0_0EXUpdatesDatabase *)database
 {
-  ABI42_0_0EXUpdatesUpdate *update = [[self alloc] initWithRawManifest:[self manifestForManifestJSON:(manifest ?: @{})]
+  ABI42_0_0EXUpdatesUpdate *update = [[self alloc] initWithManifest:[self manifestForManifestJSON:(manifest ?: @{})]
                                                        config:config
                                                      database:database];
   update.updateId = updateId;
@@ -106,7 +106,7 @@ NSString * const ABI42_0_0EXUpdatesUpdateErrorDomain = @"ABI42_0_0EXUpdatesUpdat
                                                     config:config
                                                   database:database];
   } else {
-    return [ABI42_0_0EXUpdatesBareUpdate updateWithBareRawManifest:[[ABI42_0_0EXManifestsBareManifest alloc] initWithRawManifestJSON:manifest]
+    return [ABI42_0_0EXUpdatesBareUpdate updateWithBareManifest:[[ABI42_0_0EXManifestsBareManifest alloc] initWithRawManifestJSON:manifest]
                                                    config:config
                                                  database:database];
   }
@@ -125,15 +125,15 @@ NSString * const ABI42_0_0EXUpdatesUpdateErrorDomain = @"ABI42_0_0EXUpdatesUpdat
 }
 
 + (nonnull ABI42_0_0EXManifestsManifest *)manifestForManifestJSON:(nonnull NSDictionary *)manifestJSON {
-  ABI42_0_0EXManifestsManifest *rawManifest;
+  ABI42_0_0EXManifestsManifest *manifest;
   if (manifestJSON[@"releaseId"]) {
-    rawManifest = [[ABI42_0_0EXManifestsLegacyManifest alloc] initWithRawManifestJSON:manifestJSON];
+    manifest = [[ABI42_0_0EXManifestsLegacyManifest alloc] initWithRawManifestJSON:manifestJSON];
   } else if (manifestJSON[@"metadata"]) {
-    rawManifest = [[ABI42_0_0EXManifestsNewManifest alloc] initWithRawManifestJSON:manifestJSON];
+    manifest = [[ABI42_0_0EXManifestsNewManifest alloc] initWithRawManifestJSON:manifestJSON];
   } else {
-    rawManifest = [[ABI42_0_0EXManifestsBareManifest alloc] initWithRawManifestJSON:manifestJSON];
+    manifest = [[ABI42_0_0EXManifestsBareManifest alloc] initWithRawManifestJSON:manifestJSON];
   }
-  return rawManifest;
+  return manifest;
 }
 
 @end
