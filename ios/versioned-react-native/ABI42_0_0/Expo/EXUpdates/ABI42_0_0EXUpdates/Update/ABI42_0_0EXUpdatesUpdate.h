@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, ABI42_0_0EXUpdatesUpdateStatus) {
 @property (nonatomic, strong, readonly, nullable) NSDictionary *serverDefinedHeaders;
 @property (nonatomic, strong, readonly, nullable) NSDictionary *manifestFilters;
 
-@property (nonatomic, strong, readonly) ABI42_0_0EXManifestsManifest *rawManifest;
+@property (nonatomic, strong, readonly) ABI42_0_0EXManifestsManifest *manifest;
 
 @property (nonatomic, assign) ABI42_0_0EXUpdatesUpdateStatus status;
 @property (nonatomic, strong) NSDate *lastAccessed;

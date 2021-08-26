@@ -14,7 +14,7 @@ NSString * const ABI40_0_0EXUpdatesUpdateErrorDomain = @"ABI40_0_0EXUpdatesUpdat
 
 @interface ABI40_0_0EXUpdatesUpdate ()
 
-@property (nonatomic, strong, readwrite) ABI40_0_0EXManifestsManifest* rawManifest;
+@property (nonatomic, strong, readwrite) ABI40_0_0EXManifestsManifest* manifest;
 
 @end
 
@@ -25,7 +25,7 @@ NSString * const ABI40_0_0EXUpdatesUpdateErrorDomain = @"ABI40_0_0EXUpdatesUpdat
                            database:(nullable ABI40_0_0EXUpdatesDatabase *)database
 {
   if (self = [super init]) {
-    _rawManifest = manifest;
+    _manifest = manifest;
     _config = config;
     _database = database;
     _scopeKey = config.scopeKey;

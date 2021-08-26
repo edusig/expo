@@ -161,7 +161,7 @@ didRequestManifestWithCacheBehavior:(EXManifestCacheBehavior)cacheBehavior
                              withDatabase:databaseKernelService.database
                              extraHeaders:nil
                              successBlock:^(EXUpdatesUpdate *update) {
-    success(update.rawManifest);
+    success(update.manifest);
   } errorBlock:^(NSError *error, NSURLResponse *response) {
     failure(error);
   }];
@@ -193,7 +193,7 @@ didRequestBundleWithCompletionQueue:(dispatch_queue_t)completionQueue
     // do nothing for now
   } success:^(EXUpdatesUpdate * _Nullable update) {
     if (update) {
-      success(update.rawManifest);
+      success(update.manifest);
     } else {
       success(nil);
     }

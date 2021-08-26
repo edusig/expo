@@ -14,7 +14,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
 
 @interface EXUpdatesUpdate ()
 
-@property (nonatomic, strong, readwrite) EXManifestsManifest* rawManifest;
+@property (nonatomic, strong, readwrite) EXManifestsManifest* manifest;
 
 @end
 
@@ -25,7 +25,7 @@ NSString * const EXUpdatesUpdateErrorDomain = @"EXUpdatesUpdate";
                            database:(nullable EXUpdatesDatabase *)database
 {
   if (self = [super init]) {
-    _rawManifest = manifest;
+    _manifest = manifest;
     _config = config;
     _database = database;
     _scopeKey = config.scopeKey;
