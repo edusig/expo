@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "bare-update",
+    "slug": "bare-update",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "bare-update"
+}
