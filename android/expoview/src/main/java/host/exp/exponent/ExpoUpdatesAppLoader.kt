@@ -201,12 +201,13 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
         }
 
         override fun onCachedUpdateLoaded(update: UpdateEntity): Boolean {
-          setShouldShowAppLoaderStatus(update.rawManifest)
-          if (update.rawManifest.isUsingDeveloperTool()) {
+          val manifest = ManifestFactory.getRawManifestFromJson(update.manifest)
+          setShouldShowAppLoaderStatus(manifest)
+          if (manifest.isUsingDeveloperTool()) {
             return false
           } else {
             try {
-              val experienceKey = ExperienceKey.fromRawManifest(update.rawManifest)
+              val experienceKey = ExperienceKey.fromRawManifest(manifest)
               // if previous run of this app failed due to a loading error, we want to make sure to check for remote updates
               val experienceMetadata = exponentSharedPreferences.getExperienceMetadata(experienceKey)
               if (experienceMetadata != null && experienceMetadata.optBoolean(

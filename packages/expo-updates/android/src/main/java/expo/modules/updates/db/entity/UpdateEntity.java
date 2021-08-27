@@ -66,8 +66,4 @@ public class UpdateEntity {
     this.scopeKey = scopeKey;
     this.lastAccessed = new Date();
   }
-
-  public Manifest getRawManifest() {
-    return ManifestFactory.INSTANCE.getRawManifestFromJson(this.manifest);
-  }
 }
