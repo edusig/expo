@@ -3,18 +3,15 @@
 package versioned.host.exp.exponent.modules.internal;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.storage.AsyncStorageModule;
 import com.facebook.react.modules.storage.ReactDatabaseSupplier;
 
-import expo.modules.manifests.RawManifest;
-import host.exp.exponent.ExponentManifest;
+import expo.modules.manifests.core.RawManifest;
 import host.exp.exponent.kernel.ExperienceKey;
 import host.exp.exponent.kernel.KernelProvider;
 

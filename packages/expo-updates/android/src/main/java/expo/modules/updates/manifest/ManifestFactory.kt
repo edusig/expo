@@ -1,10 +1,10 @@
 package expo.modules.updates.manifest
 
 import expo.modules.updates.UpdatesConfiguration
-import expo.modules.manifests.BareRawManifest
-import expo.modules.manifests.LegacyRawManifest
-import expo.modules.manifests.NewRawManifest
-import expo.modules.manifests.RawManifest
+import expo.modules.manifests.core.BareRawManifest
+import expo.modules.manifests.core.LegacyRawManifest
+import expo.modules.manifests.core.NewRawManifest
+import expo.modules.manifests.core.RawManifest
 import org.json.JSONException
 import org.json.JSONObject
 

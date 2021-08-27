@@ -11,7 +11,7 @@ import abi41_0_0.com.facebook.react.bridge.ReactApplicationContext;
 import abi41_0_0.com.facebook.react.uimanager.ViewManager;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+
 import abi41_0_0.org.unimodules.adapters.react.ReactModuleRegistryProvider;
 import abi41_0_0.org.unimodules.core.interfaces.Package;
 import expo.modules.core.interfaces.SingletonModule;
@@ -27,9 +27,8 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import expo.modules.manifests.RawManifest;
+import expo.modules.manifests.core.RawManifest;
 import host.exp.exponent.Constants;
-import host.exp.exponent.ExponentManifest;
 import host.exp.exponent.analytics.EXL;
 import abi41_0_0.host.exp.exponent.modules.api.appearance.rncappearance.RNCAppearanceModule;
 import abi41_0_0.host.exp.exponent.modules.api.reanimated.ReanimatedModule;

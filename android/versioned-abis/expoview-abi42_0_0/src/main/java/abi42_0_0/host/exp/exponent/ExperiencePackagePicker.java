@@ -1,7 +1,5 @@
 package abi42_0_0.host.exp.exponent;
 
-import org.json.JSONObject;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,7 +62,7 @@ import abi42_0_0.expo.modules.sqlite.SQLitePackage;
 import abi42_0_0.expo.modules.storereview.StoreReviewPackage;
 import abi42_0_0.expo.modules.taskManager.TaskManagerPackage;
 import abi42_0_0.expo.modules.updates.UpdatesPackage;
-import expo.modules.manifests.RawManifest;
+import expo.modules.manifests.core.RawManifest;
 import abi42_0_0.expo.modules.videothumbnails.VideoThumbnailsPackage;
 import abi42_0_0.expo.modules.webbrowser.WebBrowserPackage;
 import abi42_0_0.expo.modules.device.DevicePackage;

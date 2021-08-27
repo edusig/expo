@@ -59,10 +59,9 @@ import expo.modules.sqlite.SQLitePackage
 import expo.modules.storereview.StoreReviewPackage
 import expo.modules.taskManager.TaskManagerPackage
 import expo.modules.updates.UpdatesPackage
-import expo.modules.manifests.RawManifest
+import expo.modules.manifests.core.RawManifest
 import expo.modules.videothumbnails.VideoThumbnailsPackage
 import expo.modules.webbrowser.WebBrowserPackage
-import java.util.*
 
 object ExperiencePackagePicker {
   private val EXPO_MODULES_PACKAGES = listOf(

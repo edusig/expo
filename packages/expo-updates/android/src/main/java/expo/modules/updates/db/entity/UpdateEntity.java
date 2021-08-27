@@ -2,7 +2,7 @@ package expo.modules.updates.db.entity;
 
 import expo.modules.updates.db.enums.UpdateStatus;
 import expo.modules.updates.manifest.ManifestFactory;
-import expo.modules.manifests.RawManifest;
+import expo.modules.manifests.core.RawManifest;
 
 import org.json.JSONObject;
 

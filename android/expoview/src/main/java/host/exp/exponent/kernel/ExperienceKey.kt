@@ -1,6 +1,6 @@
 package host.exp.exponent.kernel
 
-import expo.modules.manifests.RawManifest
+import expo.modules.manifests.core.RawManifest
 import org.json.JSONException
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder

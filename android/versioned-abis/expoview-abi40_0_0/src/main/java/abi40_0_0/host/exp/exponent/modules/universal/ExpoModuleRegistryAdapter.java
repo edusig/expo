@@ -3,7 +3,6 @@ package abi40_0_0.host.exp.exponent.modules.universal;
 import abi40_0_0.com.facebook.react.bridge.NativeModule;
 import abi40_0_0.com.facebook.react.bridge.ReactApplicationContext;
 
-import org.json.JSONObject;
 import abi40_0_0.org.unimodules.adapters.react.ModuleRegistryAdapter;
 import abi40_0_0.org.unimodules.adapters.react.ReactModuleRegistryProvider;
 import abi40_0_0.org.unimodules.core.ModuleRegistry;
@@ -13,7 +12,7 @@ import abi40_0_0.org.unimodules.core.interfaces.RegistryLifecycleListener;
 import java.util.List;
 import java.util.Map;
 
-import expo.modules.manifests.RawManifest;
+import expo.modules.manifests.core.RawManifest;
 import host.exp.exponent.kernel.ExperienceKey;
 import abi40_0_0.host.exp.exponent.modules.api.notifications.channels.ScopedNotificationsChannelsProvider;
 import host.exp.exponent.utils.ScopedContext;

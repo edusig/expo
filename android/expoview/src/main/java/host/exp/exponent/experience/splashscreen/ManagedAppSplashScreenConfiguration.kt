@@ -3,7 +3,7 @@ package host.exp.exponent.experience.splashscreen
 import android.graphics.Color
 import androidx.annotation.ColorInt
 import expo.modules.splashscreen.SplashScreenImageResizeMode
-import expo.modules.manifests.RawManifest
+import expo.modules.manifests.core.RawManifest
 import host.exp.exponent.ExponentManifest
 import host.exp.exponent.utils.ColorParser
 import org.json.JSONObject

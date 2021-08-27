@@ -5,7 +5,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import expo.modules.updates.UpdatesConfiguration
 import expo.modules.updates.db.entity.UpdateEntity
 import expo.modules.updates.manifest.NewUpdateManifest
-import expo.modules.manifests.NewRawManifest
+import expo.modules.manifests.core.NewRawManifest
 import org.json.JSONException
 import org.json.JSONObject
 import org.junit.Assert

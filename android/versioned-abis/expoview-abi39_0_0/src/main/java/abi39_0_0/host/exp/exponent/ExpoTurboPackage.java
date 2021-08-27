@@ -12,15 +12,12 @@ import abi39_0_0.com.facebook.react.module.model.ReactModuleInfoProvider;
 import abi39_0_0.com.facebook.react.turbomodule.core.interfaces.TurboModule;
 import abi39_0_0.com.facebook.react.uimanager.ViewManager;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import expo.modules.manifests.RawManifest;
-import host.exp.exponent.ExponentManifest;
+import expo.modules.manifests.core.RawManifest;
 import abi39_0_0.host.exp.exponent.modules.internal.ExponentAsyncStorageModule;
 import abi39_0_0.host.exp.exponent.modules.internal.ExponentIntentModule;
 import abi39_0_0.host.exp.exponent.modules.internal.ExponentUnsignedAsyncStorageModule;

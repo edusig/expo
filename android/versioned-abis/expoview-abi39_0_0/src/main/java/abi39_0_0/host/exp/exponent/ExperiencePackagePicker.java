@@ -1,7 +1,5 @@
 package abi39_0_0.host.exp.exponent;
 
-import org.json.JSONObject;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,7 +64,7 @@ import abi39_0_0.expo.modules.updates.UpdatesPackage;
 import abi39_0_0.expo.modules.videothumbnails.VideoThumbnailsPackage;
 import abi39_0_0.expo.modules.webbrowser.WebBrowserPackage;
 import abi39_0_0.expo.modules.device.DevicePackage;
-import expo.modules.manifests.RawManifest;
+import expo.modules.manifests.core.RawManifest;
 
 public class ExperiencePackagePicker {
   private static final List<Package> EXPO_MODULES_PACKAGES = Arrays.<Package>asList(

@@ -1,4 +1,4 @@
-package expo.modules.manifests
+package expo.modules.manifests.core
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import org.json.JSONObject

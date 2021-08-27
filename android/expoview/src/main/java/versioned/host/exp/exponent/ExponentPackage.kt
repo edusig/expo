@@ -11,7 +11,7 @@ import expo.modules.adapters.react.ReactModuleRegistryProvider
 import expo.modules.core.interfaces.Package
 import expo.modules.core.interfaces.SingletonModule
 import expo.modules.random.RandomModule
-import expo.modules.manifests.RawManifest
+import expo.modules.manifests.core.RawManifest
 import host.exp.exponent.Constants
 import host.exp.exponent.analytics.EXL
 import host.exp.exponent.kernel.ExperienceKey
@@ -52,7 +52,6 @@ import versioned.host.exp.exponent.modules.test.ExponentTestNativeModule
 import versioned.host.exp.exponent.modules.universal.ExpoModuleRegistryAdapter
 import versioned.host.exp.exponent.modules.universal.ScopedModuleRegistryAdapter
 import java.io.UnsupportedEncodingException
-import java.util.*
 
 // This is an Expo module but not a unimodule
 class ExponentPackage : ReactPackage {
