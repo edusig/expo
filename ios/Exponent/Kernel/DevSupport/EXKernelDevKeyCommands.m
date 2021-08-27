@@ -68,6 +68,45 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
 @interface EXKernelDevKeyCommands ()
 
 @property (nonatomic, strong) NSMutableSet<EXKeyCommand *> *commands;
++ (void)handleKeyboardEvent:(UIEvent *)event;
+
+@end
+
+@interface UIEvent (UIPhysicalKeyboardEvent)
+
+@property (nonatomic) NSString *_modifiedInput;
+@property (nonatomic) NSString *_unmodifiedInput;
+@property (nonatomic) UIKeyModifierFlags _modifierFlags;
+@property (nonatomic) BOOL _isKeyDown;
+@property (nonatomic) long _keyCode;
+
+@end
+
+
+@implementation UIApplication (EXKeyCommands)
+
+- (void)handleKeyUIEventSwizzle:(UIEvent *)event
+{
+  BOOL interactionEnabled = !UIApplication.sharedApplication.isIgnoringInteractionEvents;
+  BOOL hasFirstResponder = NO;
+  
+  if (interactionEnabled) {
+    UIResponder *firstResponder = nil;
+    for (UIWindow *window in [self windows]) {
+      firstResponder = [window valueForKey:@"firstResponder"];
+      if (firstResponder) {
+        hasFirstResponder = YES;
+        break;
+      }
+    }
+    
+    if (firstResponder && [firstResponder isKindOfClass: [UITextField class]]) {
+      [self handleKeyUIEventSwizzle:event];
+    } else {
+      [EXKernelDevKeyCommands handleKeyboardEvent:event];
+    }
+  }
+};
 
 @end
 
@@ -122,6 +161,35 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
   RCTSwapInstanceMethods([UIResponder class],
                          @selector(keyCommands),
                          @selector(EX_keyCommands));
+
+  SEL originalKeyboardSelector = NSSelectorFromString(@"handleKeyUIEvent:");
+  RCTSwapInstanceMethods([UIApplication class],
+                         originalKeyboardSelector,
+                         @selector(handleKeyUIEventSwizzle:));
+}
+
++(void)handleKeyboardEvent:(UIEvent *)event
+{
+  // NOTE: throttle the key handler because on iOS 9 the handleKeyCommand:
+  // method gets called repeatedly if the command key is held down.
+  static NSTimeInterval lastCommand = 0;
+
+  if (event._isKeyDown) {
+    if (CACurrentMediaTime() - lastCommand > 0.5) {
+      NSString *input = event._modifiedInput;
+      if ([input isEqualToString: @"r"]) {
+        [[EXKernel sharedInstance] reloadVisibleApp];
+      }
+      
+      if ([input isEqualToString: @"d"]) {
+        if ([EXEnvironment sharedEnvironment].isDetached) {
+          [[EXKernel sharedInstance].visibleApp.appManager showDevMenu];
+        } else {
+          [[EXKernel sharedInstance] switchTasks];
+        }
+      }
+    }
+  }
 }
 
 - (instancetype)init
@@ -141,11 +209,6 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
                       modifierFlags:UIKeyModifierCommand
                              action:^(__unused UIKeyCommand *_) {
                                [weakSelf _handleMenuCommand];
-                             }];
-  [self registerKeyCommandWithInput:@"r"
-                      modifierFlags:UIKeyModifierCommand
-                             action:^(__unused UIKeyCommand *_) {
-                               [weakSelf _handleRefreshCommand];
                              }];
   [self registerKeyCommandWithInput:@"n"
                       modifierFlags:UIKeyModifierCommand
@@ -223,7 +286,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
   UIKeyCommand *command = [UIKeyCommand keyCommandWithInput:input
                                               modifierFlags:flags
                                                      action:@selector(EX_handleKeyCommand:)];
-  
+
   EXKeyCommand *keyCommand = [[EXKeyCommand alloc] initWithKeyCommand:command block:block];
   [_commands removeObject:keyCommand];
   [_commands addObject:keyCommand];
