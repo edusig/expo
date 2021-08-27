@@ -374,7 +374,7 @@ object NotificationHelper {
             Runnable {
               val manifest = exponentDBObject.manifest
               val experienceKey = try {
-                ExperienceKey.fromRawManifest(manifest)
+                ExperienceKey.fromManifest(manifest)
               } catch (e: JSONException) {
                 listener.onFailure(Exception("Couldn't deserialize JSON for experience scope key $experienceScopeKey"))
                 return@Runnable

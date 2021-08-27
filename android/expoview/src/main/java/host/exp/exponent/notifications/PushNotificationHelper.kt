@@ -88,7 +88,7 @@ class PushNotificationHelper {
     title: String?,
     categoryId: String?
   ) {
-    val experienceKey = ExperienceKey.fromRawManifest(manifest)
+    val experienceKey = ExperienceKey.fromManifest(manifest)
     val name = manifest.getName()
     if (name == null) {
       EXL.e(TAG, "No name found for experience scope key " + experienceKey.scopeKey)

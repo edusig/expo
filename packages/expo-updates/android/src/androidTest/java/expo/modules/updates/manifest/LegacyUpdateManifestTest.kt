@@ -165,7 +165,7 @@ class LegacyUpdateManifestTest {
     val legacyManifestJson =
       "{\"developer\":{\"tool\":\"expo-cli\"},\"sdkVersion\":\"39.0.0\",\"bundleUrl\":\"https://url.to/bundle.js\"}"
     val manifest = LegacyManifest(JSONObject(legacyManifestJson))
-    Assert.assertNotNull(LegacyUpdateManifest.fromLegacyRawManifest(manifest, createConfig()))
+    Assert.assertNotNull(LegacyUpdateManifest.fromLegacyManifest(manifest, createConfig()))
   }
 
   @Test
@@ -175,7 +175,7 @@ class LegacyUpdateManifestTest {
     val legacyManifestJson =
       "{\"sdkVersion\":\"39.0.0\",\"releaseId\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"commitTime\":\"2020-11-11T00:17:54.797Z\",\"bundleUrl\":\"https://url.to/bundle.js\"}"
     val manifest = LegacyManifest(JSONObject(legacyManifestJson))
-    Assert.assertNotNull(LegacyUpdateManifest.fromLegacyRawManifest(manifest, createConfig()))
+    Assert.assertNotNull(LegacyUpdateManifest.fromLegacyManifest(manifest, createConfig()))
   }
 
   @Test(expected = Exception::class)
@@ -184,7 +184,7 @@ class LegacyUpdateManifestTest {
     val legacyManifestJson =
       "{\"releaseId\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"commitTime\":\"2020-11-11T00:17:54.797Z\",\"bundleUrl\":\"https://url.to/bundle.js\"}"
     val manifest = LegacyManifest(JSONObject(legacyManifestJson))
-    LegacyUpdateManifest.fromLegacyRawManifest(manifest, createConfig())
+    LegacyUpdateManifest.fromLegacyManifest(manifest, createConfig())
   }
 
   @Test(expected = Exception::class)
@@ -193,7 +193,7 @@ class LegacyUpdateManifestTest {
     val legacyManifestJson =
       "{\"sdkVersion\":\"39.0.0\",\"commitTime\":\"2020-11-11T00:17:54.797Z\",\"bundleUrl\":\"https://url.to/bundle.js\"}"
     val manifest = LegacyManifest(JSONObject(legacyManifestJson))
-    LegacyUpdateManifest.fromLegacyRawManifest(manifest, createConfig())
+    LegacyUpdateManifest.fromLegacyManifest(manifest, createConfig())
   }
 
   @Test(expected = Exception::class)
@@ -202,7 +202,7 @@ class LegacyUpdateManifestTest {
     val legacyManifestJson =
       "{\"sdkVersion\":\"39.0.0\",\"releaseId\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"bundleUrl\":\"https://url.to/bundle.js\"}"
     val manifest = LegacyManifest(JSONObject(legacyManifestJson))
-    LegacyUpdateManifest.fromLegacyRawManifest(manifest, createConfig())
+    LegacyUpdateManifest.fromLegacyManifest(manifest, createConfig())
   }
 
   @Test(expected = Exception::class)
@@ -211,7 +211,7 @@ class LegacyUpdateManifestTest {
     val legacyManifestJson =
       "{\"sdkVersion\":\"39.0.0\",\"releaseId\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"commitTime\":\"2020-11-11T00:17:54.797Z\"}"
     val manifest = LegacyManifest(JSONObject(legacyManifestJson))
-    LegacyUpdateManifest.fromLegacyRawManifest(manifest, createConfig())
+    LegacyUpdateManifest.fromLegacyManifest(manifest, createConfig())
   }
 
   @Test
@@ -219,9 +219,9 @@ class LegacyUpdateManifestTest {
   fun testFromLegacyManifestJson_setsUpdateRuntimeAsSdkIfNoManifestRuntime() {
     val legacyManifestJsonWithoutRuntimeVersion =
       "{\"sdkVersion\":\"39.0.0\",\"releaseId\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"commitTime\":\"2020-11-11T00:17:54.797Z\",\"bundleUrl\":\"https://url.to/bundle.js\"}"
-    val rawManifest = LegacyManifest(JSONObject(legacyManifestJsonWithoutRuntimeVersion))
-    val newLegacyManifest = LegacyUpdateManifest.fromLegacyRawManifest(rawManifest, createConfig())
-    Assert.assertEquals("39.0.0", newLegacyManifest.updateEntity.runtimeVersion)
+    val legacyManifest = LegacyManifest(JSONObject(legacyManifestJsonWithoutRuntimeVersion))
+    val newLegacyUpdateManifest = LegacyUpdateManifest.fromLegacyManifest(legacyManifest, createConfig())
+    Assert.assertEquals("39.0.0", newLegacyUpdateManifest.updateEntity.runtimeVersion)
   }
 
   @Test
@@ -230,9 +230,9 @@ class LegacyUpdateManifestTest {
     val runtimeVersion = "hello"
     val legacyManifestJsonWithRuntimeVersion =
       String.format("{\"runtimeVersion\":\"%s\",\"sdkVersion\":\"39.0.0\",\"releaseId\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"commitTime\":\"2020-11-11T00:17:54.797Z\",\"bundleUrl\":\"https://url.to/bundle.js\"}", runtimeVersion)
-    val rawManifest = LegacyManifest(JSONObject(legacyManifestJsonWithRuntimeVersion))
-    val newLegacyManifest = LegacyUpdateManifest.fromLegacyRawManifest(rawManifest, createConfig())
-    Assert.assertEquals(runtimeVersion, newLegacyManifest.updateEntity.runtimeVersion)
+    val legacyManifest = LegacyManifest(JSONObject(legacyManifestJsonWithRuntimeVersion))
+    val newLegacyUpdateManifest = LegacyUpdateManifest.fromLegacyManifest(legacyManifest, createConfig())
+    Assert.assertEquals(runtimeVersion, newLegacyUpdateManifest.updateEntity.runtimeVersion)
   }
 
   private fun createConfig(): UpdatesConfiguration {

@@ -188,7 +188,7 @@ public class ExponentPackage implements ReactPackage {
 
     if (isVerified) {
       try {
-        ExperienceKey experienceKey = ExperienceKey.fromRawManifest(mManifest);
+        ExperienceKey experienceKey = ExperienceKey.fromManifest(mManifest);
         ScopedContext scopedContext = new ScopedContext(reactContext, experienceKey);
 
         nativeModules.add(new NotificationsModule(reactContext, experienceKey, mManifest.getStableLegacyID(), mExperienceProperties));

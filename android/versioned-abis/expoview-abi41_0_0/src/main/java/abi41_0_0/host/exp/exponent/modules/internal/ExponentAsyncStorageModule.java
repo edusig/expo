@@ -25,7 +25,7 @@ public class ExponentAsyncStorageModule extends AsyncStorageModule {
     super(reactContext);
 
     try {
-      ExperienceKey experienceKey = ExperienceKey.fromRawManifest(manifest);
+      ExperienceKey experienceKey = ExperienceKey.fromManifest(manifest);
       String databaseName = experienceKeyToDatabaseName(experienceKey);
       mReactDatabaseSupplier = new ReactDatabaseSupplier(reactContext, databaseName);
     } catch (JSONException e) {

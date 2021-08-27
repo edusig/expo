@@ -201,13 +201,13 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
         }
 
         override fun onCachedUpdateLoaded(update: UpdateEntity): Boolean {
-          val manifest = ManifestFactory.getRawManifestFromJson(update.manifest)
+          val manifest = ManifestFactory.getManifestFromManifestJson(update.manifest)
           setShouldShowAppLoaderStatus(manifest)
           if (manifest.isUsingDeveloperTool()) {
             return false
           } else {
             try {
-              val experienceKey = ExperienceKey.fromRawManifest(manifest)
+              val experienceKey = ExperienceKey.fromManifest(manifest)
               // if previous run of this app failed due to a loading error, we want to make sure to check for remote updates
               val experienceMetadata = exponentSharedPreferences.getExperienceMetadata(experienceKey)
               if (experienceMetadata != null && experienceMetadata.optBoolean(
@@ -245,7 +245,7 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
           this@ExpoUpdatesAppLoader.isUpToDate = isUpToDate
           try {
             val manifestJson = processManifestJson(launcher.launchedUpdate!!.manifest)
-            val manifest = ManifestFactory.getRawManifestFromJson(manifestJson)
+            val manifest = ManifestFactory.getManifestFromManifestJson(manifestJson)
             callback.onManifestCompleted(manifest)
 
             // ReactAndroid will load the bundle on its own in development mode
@@ -307,7 +307,7 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
         e
       )
     }
-    callback.onManifestCompleted(ManifestFactory.getRawManifestFromJson(manifestJson))
+    callback.onManifestCompleted(ManifestFactory.getManifestFromManifestJson(manifestJson))
     var launchAssetFile = launcher.launchAssetFile
     if (launchAssetFile == null) {
       // ReactInstanceManagerBuilder accepts embedded assets as strings with "assets://" prefixed
@@ -343,7 +343,7 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
       manifestJson.put(ExponentManifest.MANIFEST_IS_VERIFIED_KEY, false)
     }
     if (!manifestJson.optBoolean(ExponentManifest.MANIFEST_IS_VERIFIED_KEY, false) &&
-      exponentManifest.isAnonymousExperience(ManifestFactory.getRawManifestFromJson(manifestJson))
+      exponentManifest.isAnonymousExperience(ManifestFactory.getManifestFromManifestJson(manifestJson))
     ) {
       // automatically verified
       manifestJson.put(ExponentManifest.MANIFEST_IS_VERIFIED_KEY, true)

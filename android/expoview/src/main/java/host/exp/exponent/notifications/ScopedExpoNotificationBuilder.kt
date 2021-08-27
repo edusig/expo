@@ -40,7 +40,7 @@ open class ScopedExpoNotificationBuilder(
       try {
         val exponentDBObject = ExponentDB.experienceScopeKeyToExperienceSync(experienceScopeKey!!)
         manifest = exponentDBObject!!.manifest
-        experienceKey = ExperienceKey.fromRawManifest(manifest!!)
+        experienceKey = ExperienceKey.fromManifest(manifest!!)
       } catch (e: JSONException) {
         Log.e("notifications", "Couldn't parse manifest.", e)
         e.printStackTrace()

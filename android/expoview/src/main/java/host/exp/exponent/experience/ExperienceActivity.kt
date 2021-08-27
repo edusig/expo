@@ -474,7 +474,7 @@ open class ExperienceActivity : BaseExperienceActivity(), StartReactInstanceDele
     soLoaderInit()
 
     try {
-      experienceKey = ExperienceKey.fromRawManifest(manifest)
+      experienceKey = ExperienceKey.fromManifest(manifest)
       AsyncCondition.notify(KernelConstants.EXPERIENCE_ID_SET_FOR_ACTIVITY_KEY)
     } catch (e: JSONException) {
       KernelProvider.instance.handleError("No ID found in manifest.")

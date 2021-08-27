@@ -90,19 +90,19 @@ class LegacyUpdateManifest private constructor(
     private val EXPO_DOMAINS = arrayOf("expo.io", "exp.host", "expo.test")
 
     @Throws(JSONException::class)
-    fun fromLegacyRawManifest(
-      rawManifest: LegacyManifest,
+    fun fromLegacyManifest(
+      manifest: LegacyManifest,
       configuration: UpdatesConfiguration
     ): LegacyUpdateManifest {
       val id: UUID
       val commitTime: Date
-      if (rawManifest.isUsingDeveloperTool()) {
+      if (manifest.isUsingDeveloperTool()) {
         // xdl doesn't always serve a releaseId, but we don't need one in dev mode
         id = UUID.randomUUID()
         commitTime = Date()
       } else {
-        id = UUID.fromString(rawManifest.getReleaseId())
-        val commitTimeString = rawManifest.getCommitTime()
+        id = UUID.fromString(manifest.getReleaseId())
+        val commitTimeString = manifest.getCommitTime()
         commitTime = try {
           UpdatesUtils.parseDateString(commitTimeString)
         } catch (e: ParseException) {
@@ -111,11 +111,11 @@ class LegacyUpdateManifest private constructor(
         }
       }
 
-      val runtimeVersion = rawManifest.getRuntimeVersion() ?: rawManifest.getSDKVersion()
-      val bundleUrl = Uri.parse(rawManifest.getBundleURL())
-      val bundledAssets = rawManifest.getBundledAssets()
+      val runtimeVersion = manifest.getRuntimeVersion() ?: manifest.getSDKVersion()
+      val bundleUrl = Uri.parse(manifest.getBundleURL())
+      val bundledAssets = manifest.getBundledAssets()
       return LegacyUpdateManifest(
-        rawManifest,
+        manifest,
         configuration.updateUrl,
         id,
         configuration.scopeKey,
@@ -126,7 +126,7 @@ class LegacyUpdateManifest private constructor(
       )
     }
 
-    internal fun getAssetsUrlBase(manifestUrl: Uri, rawManifest: LegacyManifest): Uri {
+    internal fun getAssetsUrlBase(manifestUrl: Uri, legacyManifest: LegacyManifest): Uri {
       val hostname = manifestUrl.host
       return if (hostname == null) {
         Uri.parse(EXPO_ASSETS_URL_BASE)
@@ -140,7 +140,7 @@ class LegacyUpdateManifest private constructor(
         // assetUrlOverride may be an absolute or relative URL
         // if relative, we should resolve with respect to the manifest URL
         // java.net.URI's resolve method does this for us
-        val assetsPathOrUrl = rawManifest.getAssetUrlOverride() ?: "assets"
+        val assetsPathOrUrl = legacyManifest.getAssetUrlOverride() ?: "assets"
         try {
           val assetsURI = URI(assetsPathOrUrl)
           val manifestURI = URI(manifestUrl.toString())

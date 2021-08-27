@@ -91,7 +91,7 @@ class NewUpdateManifest private constructor(
     private val TAG = UpdateManifest::class.java.simpleName
 
     @Throws(JSONException::class)
-    fun fromRawManifest(
+    fun fromNewManifest(
       manifest: NewManifest,
       httpResponse: ManifestResponse?,
       configuration: UpdatesConfiguration

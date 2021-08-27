@@ -117,7 +117,7 @@ class ExponentSharedPreferences constructor(val context: Context) {
       val json = JSONObject(jsonString)
       val manifestJson = json.getJSONObject(KernelConstants.MANIFEST_KEY)
       val bundleUrl = json.getString(KernelConstants.BUNDLE_URL_KEY)
-      ManifestAndBundleUrl(ManifestFactory.getRawManifestFromJson(manifestJson), bundleUrl)
+      ManifestAndBundleUrl(ManifestFactory.getManifestFromManifestJson(manifestJson), bundleUrl)
     } catch (e: JSONException) {
       EXL.e(TAG, e)
       null

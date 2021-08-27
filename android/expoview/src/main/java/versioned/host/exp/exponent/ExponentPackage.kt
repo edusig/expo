@@ -123,7 +123,7 @@ class ExponentPackage : ReactPackage {
 
     if (isVerified) {
       try {
-        val experienceKey = ExperienceKey.fromRawManifest(manifest)
+        val experienceKey = ExperienceKey.fromManifest(manifest)
         val scopedContext = ScopedContext(reactContext, experienceKey)
         nativeModules.add(NotificationsModule(reactContext, experienceKey, manifest.getStableLegacyID(), experienceProperties))
         nativeModules.add(RNViewShotModule(reactContext, scopedContext))
