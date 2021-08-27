@@ -7,14 +7,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class NewRawManifestTest {
+class NewManifestTest {
   @Test
   @Throws(Exception::class)
   fun testGetSDKVersionNullable_ValidCases() {
     val runtimeVersion = "exposdk:39.0.0"
     val manifestJson =
       "{\"runtimeVersion\":\"$runtimeVersion\"}"
-    val manifest = NewRawManifest(JSONObject(manifestJson))
+    val manifest = NewManifest(JSONObject(manifestJson))
     Assert.assertEquals(manifest.getSDKVersionNullable(), "39.0.0")
   }
 
@@ -32,7 +32,7 @@ class NewRawManifestTest {
     runtimeVersions.forEach { runtimeVersion ->
       val manifestJson =
         "{\"runtimeVersion\":\"$runtimeVersion\"}"
-      val manifest = NewRawManifest(JSONObject(manifestJson))
+      val manifest = NewManifest(JSONObject(manifestJson))
       Assert.assertNull(manifest.getSDKVersionNullable())
     }
   }

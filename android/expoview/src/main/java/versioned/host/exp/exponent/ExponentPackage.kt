@@ -11,7 +11,7 @@ import expo.modules.adapters.react.ReactModuleRegistryProvider
 import expo.modules.core.interfaces.Package
 import expo.modules.core.interfaces.SingletonModule
 import expo.modules.random.RandomModule
-import expo.modules.manifests.core.RawManifest
+import expo.modules.manifests.core.Manifest
 import host.exp.exponent.Constants
 import host.exp.exponent.analytics.EXL
 import host.exp.exponent.kernel.ExperienceKey
@@ -57,13 +57,13 @@ import java.io.UnsupportedEncodingException
 class ExponentPackage : ReactPackage {
   private val isKernel: Boolean
   private val experienceProperties: Map<String, Any?>
-  private val manifest: RawManifest
+  private val manifest: Manifest
   private val moduleRegistryAdapter: ScopedModuleRegistryAdapter
 
   private constructor(
     isKernel: Boolean,
     experienceProperties: Map<String, Any?>,
-    manifest: RawManifest,
+    manifest: Manifest,
     expoPackages: List<Package>,
     singletonModules: List<SingletonModule>?
   ) {
@@ -75,7 +75,7 @@ class ExponentPackage : ReactPackage {
 
   constructor(
     experienceProperties: Map<String, Any?>,
-    manifest: RawManifest,
+    manifest: Manifest,
     expoPackages: List<Package>?,
     delegate: ExponentPackageDelegate?,
     singletonModules: List<SingletonModule>
@@ -231,7 +231,7 @@ class ExponentPackage : ReactPackage {
 
     fun kernelExponentPackage(
       context: Context,
-      manifest: RawManifest,
+      manifest: Manifest,
       expoPackages: List<Package>,
       initialURL: String?
     ): ExponentPackage {
@@ -255,7 +255,7 @@ class ExponentPackage : ReactPackage {
 
     fun getOrCreateSingletonModules(
       context: Context?,
-      manifest: RawManifest?,
+      manifest: Manifest?,
       providedExpoPackages: List<Package>?
     ): List<SingletonModule> {
       if (Looper.getMainLooper() != Looper.myLooper()) {

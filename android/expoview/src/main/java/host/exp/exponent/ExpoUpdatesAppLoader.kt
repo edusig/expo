@@ -18,7 +18,7 @@ import expo.modules.updates.loader.LoaderTask.BackgroundUpdateStatus
 import expo.modules.updates.loader.LoaderTask.LoaderTaskCallback
 import expo.modules.updates.manifest.UpdateManifest
 import expo.modules.updates.manifest.ManifestFactory
-import expo.modules.manifests.core.RawManifest
+import expo.modules.manifests.core.Manifest
 import expo.modules.updates.selectionpolicy.LauncherSelectionPolicyFilterAware
 import expo.modules.updates.selectionpolicy.LoaderSelectionPolicyFilterAware
 import expo.modules.updates.selectionpolicy.ReaperSelectionPolicyDevelopmentClient
@@ -73,8 +73,8 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
   private var isStarted = false
 
   interface AppLoaderCallback {
-    fun onOptimisticManifest(optimisticManifest: RawManifest)
-    fun onManifestCompleted(manifest: RawManifest)
+    fun onOptimisticManifest(optimisticManifest: Manifest)
+    fun onManifestCompleted(manifest: Manifest)
     fun onBundleCompleted(localBundlePath: String?)
     fun emitEvent(params: JSONObject)
     fun updateStatus(status: AppLoaderStatus)
@@ -225,14 +225,14 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
         override fun onRemoteUpdateManifestLoaded(updateManifest: UpdateManifest) {
           // expo-cli does not always respect our SDK version headers and respond with a compatible update or an error
           // so we need to check the compatibility here
-          val sdkVersion = updateManifest.rawManifest.getSDKVersionNullable()
+          val sdkVersion = updateManifest.manifest.getSDKVersionNullable()
           if (!isValidSdkVersion(sdkVersion)) {
             callback.onError(formatExceptionForIncompatibleSdk(sdkVersion ?: "null"))
             didAbort = true
             return
           }
-          setShouldShowAppLoaderStatus(updateManifest.rawManifest)
-          callback.onOptimisticManifest(updateManifest.rawManifest)
+          setShouldShowAppLoaderStatus(updateManifest.manifest)
+          callback.onOptimisticManifest(updateManifest.manifest)
           updateStatus(AppLoaderStatus.DOWNLOADING_NEW_UPDATE)
         }
 
@@ -296,7 +296,7 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
 
   private fun launchWithNoDatabase(context: Context, e: Exception?) {
     this.launcher = NoDatabaseLauncher(context, updatesConfiguration, e)
-    var manifestJson = EmbeddedLoader.readEmbeddedManifest(context, updatesConfiguration)!!.rawManifest.getRawJson()
+    var manifestJson = EmbeddedLoader.readEmbeddedManifest(context, updatesConfiguration)!!.manifest.getRawJson()
     try {
       manifestJson = processManifestJson(manifestJson)
     } catch (ex: Exception) {
@@ -360,7 +360,7 @@ class ExpoUpdatesAppLoader @JvmOverloads constructor(
       )
   }
 
-  private fun setShouldShowAppLoaderStatus(manifest: RawManifest) {
+  private fun setShouldShowAppLoaderStatus(manifest: Manifest) {
     // we don't want to show the cached experience alert when Updates.reloadAsync() is called
     if (useCacheOnly) {
       shouldShowAppLoaderStatus = false

@@ -8,7 +8,7 @@ import expo.modules.updates.db.entity.AssetEntity
 import expo.modules.updates.db.entity.UpdateEntity
 import expo.modules.updates.db.enums.UpdateStatus
 import expo.modules.updates.loader.EmbeddedLoader
-import expo.modules.manifests.core.LegacyRawManifest
+import expo.modules.manifests.core.LegacyManifest
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -17,7 +17,7 @@ import java.text.ParseException
 import java.util.*
 
 class LegacyUpdateManifest private constructor(
-  override val rawManifest: LegacyRawManifest,
+  override val manifest: LegacyManifest,
   private val mManifestUrl: Uri,
   private val mId: UUID,
   private val mScopeKey: String,
@@ -32,7 +32,7 @@ class LegacyUpdateManifest private constructor(
 
   override val updateEntity: UpdateEntity by lazy {
     UpdateEntity(mId, mCommitTime, mRuntimeVersion, mScopeKey).apply {
-      manifest = this@LegacyUpdateManifest.rawManifest.getRawJson()
+      manifest = this@LegacyUpdateManifest.manifest.getRawJson()
       if (isDevelopmentMode) {
         status = UpdateStatus.DEVELOPMENT
       }
@@ -41,7 +41,7 @@ class LegacyUpdateManifest private constructor(
 
   override val assetEntityList: List<AssetEntity> by lazy {
     val assetList = mutableListOf<AssetEntity>()
-    val bundleKey = rawManifest.getBundleKey()
+    val bundleKey = manifest.getBundleKey()
     assetList.add(
       AssetEntity(bundleKey, "js").apply {
         url = mBundleUrl
@@ -76,11 +76,11 @@ class LegacyUpdateManifest private constructor(
   }
 
   private val assetsUrlBase: Uri? by lazy {
-    getAssetsUrlBase(mManifestUrl, rawManifest)
+    getAssetsUrlBase(mManifestUrl, manifest)
   }
 
   override val isDevelopmentMode: Boolean by lazy {
-    rawManifest.isDevelopmentMode()
+    manifest.isDevelopmentMode()
   }
 
   companion object {
@@ -91,7 +91,7 @@ class LegacyUpdateManifest private constructor(
 
     @Throws(JSONException::class)
     fun fromLegacyRawManifest(
-      rawManifest: LegacyRawManifest,
+      rawManifest: LegacyManifest,
       configuration: UpdatesConfiguration
     ): LegacyUpdateManifest {
       val id: UUID
@@ -126,7 +126,7 @@ class LegacyUpdateManifest private constructor(
       )
     }
 
-    internal fun getAssetsUrlBase(manifestUrl: Uri, rawManifest: LegacyRawManifest): Uri {
+    internal fun getAssetsUrlBase(manifestUrl: Uri, rawManifest: LegacyManifest): Uri {
       val hostname = manifestUrl.host
       return if (hostname == null) {
         Uri.parse(EXPO_ASSETS_URL_BASE)

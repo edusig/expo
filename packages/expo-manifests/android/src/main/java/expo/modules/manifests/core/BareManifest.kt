@@ -3,7 +3,7 @@ package expo.modules.manifests.core
 import org.json.JSONException
 import org.json.JSONObject
 
-class BareRawManifest(json: JSONObject) : BaseLegacyRawManifest(json) {
+class BareManifest(json: JSONObject) : BaseLegacyManifest(json) {
   /**
    * A UUID for this manifest.
    */

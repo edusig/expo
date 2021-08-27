@@ -11,7 +11,7 @@ import abi42_0_0.com.facebook.react.module.annotations.ReactModule;
 import abi42_0_0.com.facebook.react.modules.storage.AsyncStorageModule;
 import abi42_0_0.com.facebook.react.modules.storage.ReactDatabaseSupplier;
 
-import expo.modules.manifests.core.RawManifest;
+import expo.modules.manifests.core.Manifest;
 import host.exp.exponent.kernel.ExperienceKey;
 import host.exp.exponent.kernel.KernelProvider;
 
@@ -22,7 +22,7 @@ public class ExponentAsyncStorageModule extends AsyncStorageModule {
     return "RKStorage-scoped-experience-" + experienceKey.getUrlEncodedScopeKey();
   }
 
-  public ExponentAsyncStorageModule(ReactApplicationContext reactContext, RawManifest manifest) {
+  public ExponentAsyncStorageModule(ReactApplicationContext reactContext, Manifest manifest) {
     super(reactContext);
 
     try {

@@ -9,7 +9,7 @@ interface InternalJSONMutator {
   fun updateJSON(json: JSONObject)
 }
 
-abstract class RawManifest(protected val json: JSONObject) {
+abstract class Manifest(protected val json: JSONObject) {
   @Deprecated(message = "Strive for manifests to be immutable")
   @Throws(JSONException::class)
   fun mutateInternalJSONInPlace(internalJSONMutator: InternalJSONMutator) {

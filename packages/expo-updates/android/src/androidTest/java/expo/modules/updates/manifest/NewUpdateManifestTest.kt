@@ -3,7 +3,7 @@ package expo.modules.updates.manifest
 import android.net.Uri
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import expo.modules.updates.UpdatesConfiguration
-import expo.modules.manifests.core.NewRawManifest
+import expo.modules.manifests.core.NewManifest
 import org.json.JSONException
 import org.json.JSONObject
 import org.junit.Assert
@@ -19,7 +19,7 @@ class NewUpdateManifestTest {
     // production manifests should require the id, createdAt, runtimeVersion, and launchAsset fields
     val manifestJson =
       "{\"runtimeVersion\":\"1\",\"id\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"createdAt\":\"2020-11-11T00:17:54.797Z\",\"launchAsset\":{\"url\":\"https://url.to/bundle.js\",\"contentType\":\"application/javascript\"}}"
-    val manifest = NewRawManifest(JSONObject(manifestJson))
+    val manifest = NewManifest(JSONObject(manifestJson))
     Assert.assertNotNull(NewUpdateManifest.fromRawManifest(manifest, null, createConfig()))
   }
 
@@ -28,7 +28,7 @@ class NewUpdateManifestTest {
   fun testFromManifestJson_NoId() {
     val manifestJson =
       "{\"runtimeVersion\":\"1\",\"createdAt\":\"2020-11-11T00:17:54.797Z\",\"launchAsset\":{\"url\":\"https://url.to/bundle.js\",\"contentType\":\"application/javascript\"}}"
-    val manifest = NewRawManifest(JSONObject(manifestJson))
+    val manifest = NewManifest(JSONObject(manifestJson))
     NewUpdateManifest.fromRawManifest(manifest, null, createConfig())
   }
 
@@ -37,7 +37,7 @@ class NewUpdateManifestTest {
   fun testFromManifestJson_NoCreatedAt() {
     val manifestJson =
       "{\"runtimeVersion\":\"1\",\"id\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"launchAsset\":{\"url\":\"https://url.to/bundle.js\",\"contentType\":\"application/javascript\"}}"
-    val manifest = NewRawManifest(JSONObject(manifestJson))
+    val manifest = NewManifest(JSONObject(manifestJson))
     NewUpdateManifest.fromRawManifest(manifest, null, createConfig())
   }
 
@@ -46,7 +46,7 @@ class NewUpdateManifestTest {
   fun testFromManifestJson_NoRuntimeVersion() {
     val manifestJson =
       "{\"id\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"createdAt\":\"2020-11-11T00:17:54.797Z\",\"launchAsset\":{\"url\":\"https://url.to/bundle.js\",\"contentType\":\"application/javascript\"}}"
-    val manifest = NewRawManifest(JSONObject(manifestJson))
+    val manifest = NewManifest(JSONObject(manifestJson))
     NewUpdateManifest.fromRawManifest(manifest, null, createConfig())
   }
 
@@ -55,7 +55,7 @@ class NewUpdateManifestTest {
   fun testFromManifestJson_NoLaunchAsset() {
     val manifestJson =
       "{\"runtimeVersion\":\"1\",\"id\":\"0eef8214-4833-4089-9dff-b4138a14f196\",\"createdAt\":\"2020-11-11T00:17:54.797Z\",}"
-    val manifest = NewRawManifest(JSONObject(manifestJson))
+    val manifest = NewManifest(JSONObject(manifestJson))
     NewUpdateManifest.fromRawManifest(manifest, null, createConfig())
   }
 

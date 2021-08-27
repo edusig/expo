@@ -10,7 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import de.greenrobot.event.EventBus
-import expo.modules.manifests.core.RawManifest
+import expo.modules.manifests.core.Manifest
 import host.exp.exponent.Constants
 import host.exp.exponent.ExponentManifest
 import host.exp.exponent.ExponentManifest.BitmapListener
@@ -83,7 +83,7 @@ class PushNotificationHelper {
     message: String?,
     channelId: String?,
     manifestUrl: String,
-    manifest: RawManifest,
+    manifest: Manifest,
     body: String?,
     title: String?,
     categoryId: String?

@@ -7,14 +7,14 @@ import expo.modules.updates.db.entity.AssetEntity
 import expo.modules.updates.db.entity.UpdateEntity
 import expo.modules.updates.db.enums.UpdateStatus
 import expo.modules.updates.loader.EmbeddedLoader
-import expo.modules.manifests.core.BareRawManifest
+import expo.modules.manifests.core.BareManifest
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
 class BareUpdateManifest private constructor(
-  override val rawManifest: BareRawManifest,
+  override val manifest: BareManifest,
   private val mId: UUID,
   private val mScopeKey: String,
   private val mCommitTime: Date,
@@ -78,7 +78,7 @@ class BareUpdateManifest private constructor(
 
     @Throws(JSONException::class)
     fun fromManifestJson(
-      rawManifest: BareRawManifest,
+      rawManifest: BareManifest,
       configuration: UpdatesConfiguration
     ): BareUpdateManifest {
       val id = UUID.fromString(rawManifest.getID())

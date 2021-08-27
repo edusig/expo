@@ -4,7 +4,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-abstract class BaseLegacyRawManifest(json: JSONObject) : RawManifest(json) {
+abstract class BaseLegacyManifest(json: JSONObject) : Manifest(json) {
   override fun getStableLegacyID(): String = if (json.has("originalFullName")) {
     json.getString("originalFullName")
   } else {

@@ -1,6 +1,6 @@
 package host.exp.exponent.kernel
 
-import expo.modules.manifests.core.RawManifest
+import expo.modules.manifests.core.Manifest
 import org.json.JSONException
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -13,6 +13,6 @@ data class ExperienceKey(
 
   companion object {
     @Throws(JSONException::class)
-    @JvmStatic fun fromRawManifest(rawManifest: RawManifest) = ExperienceKey(rawManifest.getScopeKey())
+    @JvmStatic fun fromRawManifest(rawManifest: Manifest) = ExperienceKey(rawManifest.getScopeKey())
   }
 }

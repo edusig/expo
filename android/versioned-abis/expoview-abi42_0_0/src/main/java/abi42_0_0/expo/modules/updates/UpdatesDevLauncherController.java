@@ -94,7 +94,7 @@ public class UpdatesDevLauncherController implements UpdatesInterface {
 
       @Override
       public boolean onUpdateManifestLoaded(UpdateManifest updateManifest) {
-        return callback.onManifestLoaded(updateManifest.getRawManifest().getRawJson());
+        return callback.onManifestLoaded(updateManifest.getManifest().getRawJson());
       }
     });
   }

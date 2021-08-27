@@ -2,7 +2,7 @@ package expo.modules.updates.db.entity;
 
 import expo.modules.updates.db.enums.UpdateStatus;
 import expo.modules.updates.manifest.ManifestFactory;
-import expo.modules.manifests.core.RawManifest;
+import expo.modules.manifests.core.Manifest;
 
 import org.json.JSONObject;
 
@@ -67,7 +67,7 @@ public class UpdateEntity {
     this.lastAccessed = new Date();
   }
 
-  public RawManifest getRawManifest() {
+  public Manifest getRawManifest() {
     return ManifestFactory.INSTANCE.getRawManifestFromJson(this.manifest);
   }
 }

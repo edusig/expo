@@ -6,7 +6,7 @@ import org.json.JSONObject
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class NewRawManifest(json: JSONObject) : RawManifest(json) {
+class NewManifest(json: JSONObject) : Manifest(json) {
   /**
    * An ID representing this manifest, not the ID for the experience.
    */

@@ -11,7 +11,7 @@ import android.text.TextUtils
 import android.util.LruCache
 import expo.modules.updates.manifest.ManifestFactory
 import expo.modules.manifests.core.InternalJSONMutator
-import expo.modules.manifests.core.RawManifest
+import expo.modules.manifests.core.Manifest
 import host.exp.exponent.analytics.EXL
 import host.exp.exponent.generated.ExponentBuildConstants
 import host.exp.exponent.kernel.ExponentUrls
@@ -133,7 +133,7 @@ class ExponentManifest @Inject constructor(
     }
   }
 
-  fun getColorFromManifest(manifest: RawManifest): Int {
+  fun getColorFromManifest(manifest: Manifest): Int {
     val colorString = manifest.getPrimaryColor()
     return if (colorString != null && ColorParser.isValid(colorString)) {
       Color.parseColor(colorString)
@@ -142,7 +142,7 @@ class ExponentManifest @Inject constructor(
     }
   }
 
-  fun isAnonymousExperience(manifest: RawManifest): Boolean {
+  fun isAnonymousExperience(manifest: Manifest): Boolean {
     return try {
       val id = manifest.getLegacyID()
       id.startsWith(ANONYMOUS_EXPERIENCE_PREFIX)
@@ -151,7 +151,7 @@ class ExponentManifest @Inject constructor(
     }
   }
 
-  private fun getLocalKernelManifest(): RawManifest = try {
+  private fun getLocalKernelManifest(): Manifest = try {
     val manifest = JSONObject(ExponentBuildConstants.BUILD_MACHINE_KERNEL_MANIFEST)
     manifest.put(MANIFEST_IS_VERIFIED_KEY, true)
     ManifestFactory.getRawManifestFromJson(manifest)
@@ -159,7 +159,7 @@ class ExponentManifest @Inject constructor(
     throw RuntimeException("Can't get local manifest: $e")
   }
 
-  private fun getRemoteKernelManifest(): RawManifest? = try {
+  private fun getRemoteKernelManifest(): Manifest? = try {
     val inputStream = context.assets.open(EMBEDDED_KERNEL_MANIFEST_ASSET)
     val jsonString = IOUtils.toString(inputStream)
     val manifest = JSONObject(jsonString)
@@ -170,8 +170,8 @@ class ExponentManifest @Inject constructor(
     null
   }
 
-  fun getKernelManifest(): RawManifest {
-    val manifest: RawManifest?
+  fun getKernelManifest(): Manifest {
+    val manifest: Manifest?
     val log: String
     if (exponentSharedPreferences.shouldUseInternetKernel()) {
       log = "Using remote Expo kernel manifest"
@@ -269,7 +269,7 @@ class ExponentManifest @Inject constructor(
     private var hasShownKernelManifestLog = false
 
     @Throws(JSONException::class)
-    fun normalizeRawManifestInPlace(rawManifest: RawManifest, manifestUrl: String) {
+    fun normalizeRawManifestInPlace(rawManifest: Manifest, manifestUrl: String) {
       rawManifest.mutateInternalJSONInPlace(object : InternalJSONMutator {
         override fun updateJSON(json: JSONObject) {
           if (!json.has(MANIFEST_ID_KEY)) {
