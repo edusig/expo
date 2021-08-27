@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "postinstall": "expo-yarn-workspaces postinstall"
   },
   "dependencies": {
     "expo": "file:../../packages/expo",
@@ -24,7 +25,13 @@
     "react-native-web": "~0.17.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "expo-yarn-workspaces": "^1.5.2"
+  },
+  "expo-yarn-workspaces": {
+    "symlinks": [
+      "react-native"
+    ]
   },
   "private": true
 }
