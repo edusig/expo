@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "expo": "file:../../packages/expo",
+    "expo-modules-core": "file:../../packages/expo-modules-core",
     "expo-splash-screen": "file:../../packages/expo-splash-screen",
     "expo-status-bar": "file:../../packages/expo-status-bar",
     "expo-updates": "file:../../packages/expo-updates",
@@ -21,7 +22,6 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.3.0",
-    "react-native-unimodules": "file:../../packages/react-native-unimodules",
     "react-native-web": "~0.17.1"
   },
   "devDependencies": {
