@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "expo": "file:../../packages/expo",
+    "expo-cellular": "file:../../packages/expo-cellular",
     "expo-modules-core": "file:../../packages/expo-modules-core",
     "expo-splash-screen": "file:../../packages/expo-splash-screen",
     "expo-status-bar": "file:../../packages/expo-status-bar",
