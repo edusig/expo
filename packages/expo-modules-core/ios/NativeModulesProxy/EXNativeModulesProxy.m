@@ -176,7 +176,9 @@ RCT_EXPORT_METHOD(callMethod:(NSString *)moduleName methodNameOrKey:(id)methodNa
 {
   // Registering expo modules in bridge is needed only when the proxy module owns the registry
   // (was autoinitialized by React Native). Otherwise they're registered by the registry adapter.
-  if (!_ownsModuleRegistry || [bridge moduleForClass:[EXReactNativeEventEmitter class]] != nil) {
+  if (!_ownsModuleRegistry) {
+  // Fix `Unable to find module for EXReactNativeEventEmitter` error
+  // if (!_ownsModuleRegistry || [bridge moduleForClass:[EXReactNativeEventEmitter class]] != nil) {
     return;
   }
 
