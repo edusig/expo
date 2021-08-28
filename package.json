@@ -22,7 +22,8 @@
     ]
   },
   "resolutions": {
-    "react-native": "0.64.2"
+    "react-native": "0.64.2",
+    "fsevents": "2.3.2"
   },
   "dependencies": {
     "jsc-android": "^245459.0.0",
