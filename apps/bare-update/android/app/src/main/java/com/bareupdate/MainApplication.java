@@ -3,7 +3,6 @@ package com.bareupdate;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -15,7 +14,6 @@ import com.facebook.soloader.SoLoader;
 
 import expo.modules.adapters.react.ApplicationLifecycleDispatcher;
 import expo.modules.adapters.react.ReactNativeHostWrapper;
-import expo.modules.updates.UpdatesController;
 
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
@@ -24,7 +22,6 @@ import androidx.annotation.NonNull;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
@@ -49,24 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected JSIModulePackage getJSIModulePackage() {
       return new ReanimatedJSIModulePackage();
     }
-
-    @Override
-    protected @Nullable String getJSBundleFile() {
-      if (BuildConfig.DEBUG) {
-        return super.getJSBundleFile();
-      } else {
-        return UpdatesController.getInstance().getLaunchAssetFile();
-      }
-    }
-
-    @Override
-    protected @Nullable String getBundleAssetName() {
-      if (BuildConfig.DEBUG) {
-        return super.getBundleAssetName();
-      } else {
-        return UpdatesController.getInstance().getBundleAssetName();
-      }
-    }
   });
 
   @Override
@@ -78,10 +57,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-
-    if (!BuildConfig.DEBUG) {
-      UpdatesController.initialize(this);
-    }
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
