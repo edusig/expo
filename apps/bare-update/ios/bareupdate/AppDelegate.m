@@ -7,7 +7,6 @@
 #import <React/RCTConvert.h>
 #import <React/RCTDevMenu.h>
 
-#import <EXSplashScreen/EXSplashScreenService.h>
 #import <ExpoModulesCore/EXModuleRegistryProvider.h>
 
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
@@ -98,8 +97,6 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (void)appController:(EXUpdatesAppController *)appController didStartWithSuccess:(BOOL)success {
   appController.bridge = [self initializeReactNativeApp];
-  EXSplashScreenService *splashScreenService = (EXSplashScreenService *)[EXModuleRegistryProvider getSingletonModuleForClass:[EXSplashScreenService class]];
-  [splashScreenService showSplashScreenFor:self.window.rootViewController];
 }
 
 // Linking API
