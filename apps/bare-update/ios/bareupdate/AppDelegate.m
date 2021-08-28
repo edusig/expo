@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <React/RCTConvert.h>
+#import <React/RCTDevMenu.h>
 
 #import <EXSplashScreen/EXSplashScreenService.h>
 #import <ExpoModulesCore/EXModuleRegistryProvider.h>
@@ -76,6 +77,16 @@ static void InitializeFlipper(UIApplication *application) {
 
   return bridge;
  }
+
+- (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
+{
+  return @[
+    // RCTDevMenu was removed when integrating React with Expo client:
+    // https://github.com/expo/react-native/commit/7f2912e8005ea6e81c45935241081153b822b988
+    // Let's bring it back in RNTester.
+    (id<RCTBridgeModule>)[RCTDevMenu new],
+  ];
+}
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
  #ifdef DEBUG
